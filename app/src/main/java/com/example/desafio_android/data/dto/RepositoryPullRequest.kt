@@ -1,6 +1,6 @@
 package com.example.desafio_android.data.dto
 
-data class GitHubJavaRepositoryPullRequestsResponse(
+data class RepositoryPullRequest(
     val url: String?,
     val id: Int?,
     val node_id: String?,

@@ -21,15 +21,20 @@ class HomeFragment: Fragment() {
     private val _viewModel: HomeViewModel by inject()
     private lateinit var adapter: HomeRecyclerViewAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding!!.viewModel = _viewModel
+        _binding!!.lifecycleOwner = this
+
         adapter = HomeRecyclerViewAdapter(HomeRecyclerViewAdapter.OnClickListener{
             _viewModel.displayGitHubJavaRepositoryDetails(it)
         })
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        _binding!!.viewModel = _viewModel
-        _binding!!.lifecycleOwner = this
-        _binding!!.recyclerviewVistaGeneralListadoDeEmergencias.adapter = adapter
+        _binding!!.homeScreenRecyclerViewListadoDeRepositories.adapter = adapter
 
 
         _viewModel.listaEnPantalla.observe(viewLifecycleOwner) {
