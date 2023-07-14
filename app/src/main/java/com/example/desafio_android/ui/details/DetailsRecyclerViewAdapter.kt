@@ -32,7 +32,7 @@ class DetailsRecyclerViewAdapter(
         val repositoryPullRequest = getItem(position)
         holder.bind(repositoryPullRequest)
         holder.itemView.setOnClickListener{
-            onClickListener.onClick()
+            onClickListener.onClick(repositoryPullRequest)
         }
     }
 
@@ -56,7 +56,7 @@ class DetailsRecyclerViewAdapter(
         }
     }
 
-    class OnClickListener(val clickListener: () -> Unit) {
-        fun onClick() = clickListener()
+    class OnClickListener(val clickListener: (repositoryPullRequest: RepositoryPullRequest) -> Unit) {
+        fun onClick(repositoryPullRequest: RepositoryPullRequest) = clickListener(repositoryPullRequest)
     }
 }

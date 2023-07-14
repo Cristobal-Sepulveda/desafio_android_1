@@ -1,5 +1,8 @@
 package com.example.desafio_android.ui.details
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.desafio_android.data.dto.GitHubJavaRepository
 import com.example.desafio_android.data.dto.RepositoryPullRequest
 import com.example.desafio_android.databinding.FragmentDetailsBinding
+import com.example.desafio_android.ui.home.HomeRecyclerViewAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -31,6 +35,7 @@ class DetailsFragment(): Fragment() {
         _binding!!.lifecycleOwner = this
 
         adapter = DetailsRecyclerViewAdapter(DetailsRecyclerViewAdapter.OnClickListener{
+            openPullRequestInChrome(it)
         })
 
         _binding!!.detailsScreenRecyclerViewListOfRepositoryPullRequests.adapter = adapter
@@ -43,6 +48,19 @@ class DetailsFragment(): Fragment() {
         getScreenData()
 
         return _binding!!.root
+    }
+
+    private fun openPullRequestInChrome(it: RepositoryPullRequest) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.apply {
+            data = Uri.parse(it.html_url)
+            setPackage("com.android.chrome")
+        }
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+
+        }
     }
 
     private fun getScreenData() {

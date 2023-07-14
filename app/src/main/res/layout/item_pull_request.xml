@@ -12,7 +12,65 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/itemPullRequest_textView_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{pullRequestItem.title}"
+            android:textColor="@color/nombreGitHubJavaRepository"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_big"
+            tools:text="Nombre repositorio"
+            />
+
+        <TextView
+            android:id="@+id/itemPullRequest_textView_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemPullRequest_textView_title"
+            android:text="@{pullRequestItem.body}"
+            android:textSize="@dimen/text_medium"
+            tools:text="Descripción descripcion"
+            />
+
+        <ImageView
+            android:id="@+id/itemPullRequest_imageView_userProfilePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemPullRequest_textView_description"
+            android:src="@drawable/baseline_fork_right_24"
+            android:contentDescription="@string/cantidad_de_forks"
+            />
+
+        <TextView
+            android:id="@+id/itemPullRequest_textView_userProfileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/itemPullRequest_imageView_userProfilePhoto"
+            app:layout_constraintTop_toTopOf="@+id/itemPullRequest_imageView_userProfilePhoto"
+            android:text="@{pullRequestItem.user.login}"
+            android:textColor="@color/nombreGitHubJavaRepository"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_medium"
+            tools:text="640"
+            />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemPullRequest_imageView_userProfilePhoto"
+            android:layout_marginTop="@dimen/space_medium"
+            app:dividerColor="@color/divider"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
