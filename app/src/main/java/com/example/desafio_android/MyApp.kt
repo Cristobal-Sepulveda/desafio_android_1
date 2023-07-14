@@ -7,6 +7,7 @@ import com.example.desafio_android.ui.details.DetailsViewModel
 import com.example.desafio_android.ui.home.HomeViewModel
 import org.koin.dsl.module
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 
 class MyApp : Application() {
@@ -15,12 +16,16 @@ class MyApp : Application() {
         super.onCreate()
 
         val myModule = module {
-
-            single {
+            viewModel{
                 HomeViewModel(
                     get() as AppDataSource
                 )
             }
+            //single {
+            //    HomeViewModel(
+            //        get() as AppDataSource
+            //    )
+            //}
 
             single {
                 DetailsViewModel(
@@ -38,6 +43,13 @@ class MyApp : Application() {
         }
     }
 }
+
+
+
+
+
+
+
 
 // errores con un punto especifico en live data emite el resultado que esta guardado
 // el observador se recrea cuando vuelve a la vista, tener cuidado que cosas coloco

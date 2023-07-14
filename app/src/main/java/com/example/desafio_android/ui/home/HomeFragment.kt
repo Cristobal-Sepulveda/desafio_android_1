@@ -15,10 +15,12 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import com.example.desafio_android.ui.home.HomeFragmentDirections
 import com.example.desafio_android.utils.asParcelable
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment: Fragment() {
     private var _binding: FragmentHomeBinding? = null
-    private val _viewModel: HomeViewModel by inject()
+    //private val _viewModel: HomeViewModel by inject()
+    private val _viewModel: HomeViewModel by viewModel()
     private lateinit var adapter: HomeRecyclerViewAdapter
 
     override fun onCreateView(
@@ -28,7 +30,7 @@ class HomeFragment: Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         _binding!!.viewModel = _viewModel
-        _binding!!.lifecycleOwner = this
+        _binding!!.lifecycleOwner = viewLifecycleOwner
 
         adapter = HomeRecyclerViewAdapter(HomeRecyclerViewAdapter.OnClickListener{
             _viewModel.displayGitHubJavaRepositoryDetails(it)

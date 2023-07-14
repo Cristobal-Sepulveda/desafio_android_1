@@ -50,6 +50,19 @@ class DetailsFragment(): Fragment() {
         return _binding!!.root
     }
 
+    private fun getScreenData() {
+        lifecycleScope.launch(Dispatchers.IO){
+            val fullName = DetailsFragmentArgs
+                .fromBundle(requireArguments())
+                .parcelableGitHubJavaRepository
+                .full_name!!
+
+            _viewModel.fullName = fullName
+
+            _viewModel.obtenerJavaRepositoryFromGitHub(fullName)
+        }
+    }
+
     private fun openPullRequestInChrome(it: RepositoryPullRequest) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.apply {
@@ -63,18 +76,7 @@ class DetailsFragment(): Fragment() {
         }
     }
 
-    private fun getScreenData() {
-        lifecycleScope.launch(Dispatchers.IO){
-            val fullName = DetailsFragmentArgs
-                .fromBundle(requireArguments())
-                .parcelableGitHubJavaRepository
-                .full_name!!
 
-            _viewModel.fullName = fullName
-
-            _viewModel.obtenerJavaRepositoryFromGitHub(fullName)
-        }
-    }
 
 }
 

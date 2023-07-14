@@ -69,6 +69,8 @@ dependencies {
     // Navigation Graph
     implementation 'io.insert-koin:koin-androidx-navigation:3.3.3'
 
+
+
     //Moshi
     implementation 'com.squareup.moshi:moshi:1.14.0'
     implementation 'com.squareup.moshi:moshi-kotlin:1.14.0'

@@ -1,5 +1,6 @@
 package com.example.desafio_android.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,6 +25,9 @@ class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
     private val _navigateToSelectedGitHubJavaRepository = MutableLiveData<GitHubJavaRepository>()
     val navigateToSelectedGitHubJavaRepository: LiveData<GitHubJavaRepository> = _navigateToSelectedGitHubJavaRepository
 
+    init {
+        Log.e("ViewModel", "asd")
+    }
 
     fun refresh() {
         viewModelScope.launch(Dispatchers.IO){
