@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name ="gitHubJavaRepositoryItem"
+            type ="com.example.desafio_android.data.dto.GitHubJavaRepository"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/itemGitHubRepository_constraintLayout_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_medium">
+
+        <TextView
+            android:id="@+id/itemGitHubRepository_textView_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{gitHubJavaRepositoryItem.name}"
+            android:textColor="@color/nombreGitHubJavaRepository"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_big"
+            tools:text="Nombre repositorio"
+            />
+
+        <TextView
+            android:id="@+id/itemGitHubRepository_textView_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemGitHubRepository_textView_name"
+            android:text="@{gitHubJavaRepositoryItem.description}"
+            android:textSize="@dimen/text_medium"
+            tools:text="Descripción descripcion"
+            />
+
+        <ImageView
+            android:id="@+id/itemGitHubRepository_imageView_forks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemGitHubRepository_textView_description"
+            android:src="@drawable/baseline_fork_right_24"
+            android:contentDescription="@string/cantidad_de_forks"
+            />
+
+        <TextView
+            android:id="@+id/itemGitHubRepository_textView_cantidadDeForks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/itemGitHubRepository_imageView_forks"
+            app:layout_constraintTop_toTopOf="@+id/itemGitHubRepository_imageView_forks"
+            app:layout_constraintBottom_toBottomOf="@+id/itemGitHubRepository_imageView_forks"
+            app:cambiarLongAString="@{gitHubJavaRepositoryItem.forks_count}"
+            android:textColor="@color/itemGitHubAmarillo"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_medium"
+            tools:text="640"
+            />
+
+        <ImageView
+            android:id="@+id/itemGitHubRepository_imageView_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/itemGitHubRepository_textView_cantidadDeForks"
+            app:layout_constraintTop_toBottomOf="@id/itemGitHubRepository_textView_description"
+            android:src="@drawable/baseline_star_24"
+            android:contentDescription="@string/cantidad_de_forks"
+            />
+
+        <TextView
+            android:id="@+id/itemGitHubRepository_textView_cantidadDeStars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/itemGitHubRepository_imageView_stars"
+            app:layout_constraintTop_toTopOf="@+id/itemGitHubRepository_imageView_stars"
+            app:layout_constraintBottom_toBottomOf="@+id/itemGitHubRepository_imageView_stars"
+            app:cambiarLongAString="@{gitHubJavaRepositoryItem.stargazers_count}"
+            android:textColor="@color/itemGitHubAmarillo"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_medium"
+            tools:text="340"
+            />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemGitHubRepository_textView_cantidadDeForks"
+            android:layout_marginTop="@dimen/space_medium"
+            app:dividerColor="@color/divider"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

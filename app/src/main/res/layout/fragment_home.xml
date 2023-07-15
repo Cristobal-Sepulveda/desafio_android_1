@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.desafio_android.ui.home.HomeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--RecyclerView-->
+        <com.example.desafio_android.utils.ScrollChildSwipeRefreshLayout
+
+            android:id="@+id/refresh_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:onRefreshListener="@{viewModel::refresh}"
+            app:refreshing="@{viewModel.dataLoading}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_vistaGeneral_listadoDeEmergencias"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginHorizontal="@dimen/space_small"
+                android:layout_marginBottom="@dimen/space_big"
+                android:background="@color/container"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <ProgressBar
+                android:id="@+id/circularProgressIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:contentDescription="@string/loading"
+                app:cloudRequestStatusCircularProgress="@{viewModel.status}"
+                app:layout_constraintStart_toStartOf="@+id/recyclerview_vistaGeneral_listadoDeEmergencias"
+                app:layout_constraintEnd_toEndOf="@id/recyclerview_vistaGeneral_listadoDeEmergencias"
+                app:layout_constraintTop_toTopOf="@id/recyclerview_vistaGeneral_listadoDeEmergencias"
+                app:layout_constraintBottom_toBottomOf="@id/recyclerview_vistaGeneral_listadoDeEmergencias"
+                />
+
+            <ImageView
+                android:id="@+id/imageView_vincularCuentas_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/recyclerview_vistaGeneral_listadoDeEmergencias"
+                app:layout_constraintEnd_toEndOf="@id/recyclerview_vistaGeneral_listadoDeEmergencias"
+                app:layout_constraintTop_toTopOf="@id/recyclerview_vistaGeneral_listadoDeEmergencias"
+                app:layout_constraintBottom_toBottomOf="@id/recyclerview_vistaGeneral_listadoDeEmergencias"
+                app:cloudRequestStatusImage="@{viewModel.status}"
+                android:src="@drawable/ic_connection_error_100"
+                android:contentDescription="@string/error_al_intentar_obtener_la_lista_de_usuarios_desde_la_nube" />
+
+        </com.example.desafio_android.utils.ScrollChildSwipeRefreshLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/fab_content_subir"
+            app:srcCompat="@drawable/baseline_keyboard_arrow_up_24"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

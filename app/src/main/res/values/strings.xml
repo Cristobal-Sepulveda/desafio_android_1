@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">desafio-android</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="details_fragment">Details Fragment</string>
+    <string name="error_api">No se han podido obtener los repositorios de interes.</string>
+    <string name="exito_api">Tarea completada con éxito</string>
+    <string name="loading">Cargando</string>
+    <string name="error_al_intentar_obtener_la_lista_de_usuarios_desde_la_nube">Error al obtener datos desde la nube</string>
+    <string name="fab_content_subir">Subir</string>
+    <string name="cantidad_de_forks">Cantidad de forks\n</string>
+</resources>

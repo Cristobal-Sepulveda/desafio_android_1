@@ -1,0 +1,89 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs'
+}
+
+android {
+    namespace 'com.example.desafio_android'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.desafio_android"
+        minSdk 28
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    //Gson
+    implementation 'com.google.code.gson:gson:2.10'
+
+    //Koin Dependency Injection
+    // Koin Core features
+    implementation 'io.insert-koin:koin-core:3.3.3'
+    // Koin Test features
+    testImplementation 'io.insert-koin:koin-test:3.3.3'
+    // Koin for JUnit 4
+    testImplementation 'io.insert-koin:koin-test-junit4:3.3.3'
+    // Koin for JUnit 5
+    testImplementation 'io.insert-koin:koin-test-junit5:3.3.3'
+    // Koin main features for Android
+    implementation 'io.insert-koin:koin-android:3.3.3'
+    // Java Compatibility
+    implementation 'io.insert-koin:koin-android-compat:3.3.3'
+    // Jetpack WorkManager
+    implementation 'io.insert-koin:koin-androidx-workmanager:3.3.3'
+    // Navigation Graph
+    implementation 'io.insert-koin:koin-androidx-navigation:3.3.3'
+
+    //Moshi
+    implementation 'com.squareup.moshi:moshi:1.14.0'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.14.0'
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.14.0'
+
+    //Navigation
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+    implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
+
+    //SwipeRefreshLayout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+}
