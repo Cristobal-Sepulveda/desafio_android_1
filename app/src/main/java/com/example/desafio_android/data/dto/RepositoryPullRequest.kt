@@ -35,7 +35,7 @@ data class RepositoryPullRequest(
     val base: Branch?,
     val _links: Links?,
     val author_association: String?,
-    val auto_merge: Boolean?,
+    val auto_merge: AutoMergeData?,
     val active_lock_reason: String?
 )
 
@@ -216,3 +216,32 @@ data class Team(
     val members_url: String?,
     val repositories_url: String?
 )
+
+data class AutoMergeData(
+    val enabledBy: EnabledBy?,
+    val mergeMethod: String?,
+    val commitTitle: String?,
+    val commitMessage: String?
+)
+
+data class EnabledBy(
+    val login: String?,
+    val id: Int?,
+    val nodeId: String?,
+    val avatarUrl: String?,
+    val gravatarId: String?,
+    val url: String?,
+    val htmlUrl: String?,
+    val followersUrl: String?,
+    val followingUrl: String?,
+    val gistsUrl: String?,
+    val starredUrl: String?,
+    val subscriptionsUrl: String?,
+    val organizationsUrl: String?,
+    val reposUrl: String?,
+    val eventsUrl: String?,
+    val receivedEventsUrl: String?,
+    val type: String?,
+    val siteAdmin: Boolean?
+)
+

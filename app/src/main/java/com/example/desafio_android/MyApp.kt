@@ -16,25 +16,10 @@ class MyApp : Application() {
         super.onCreate()
 
         val myModule = module {
-            viewModel{
-                HomeViewModel(
-                    get() as AppDataSource
-                )
-            }
-            //single {
-            //    HomeViewModel(
-            //        get() as AppDataSource
-            //    )
-            //}
-
-            single {
-                DetailsViewModel(
-                    get() as AppDataSource
-                )
-            }
-
-            //REPOSITORY
             single { AppRepository() as AppDataSource }
+            viewModel{ HomeViewModel(get() as AppDataSource) }
+            /*single { HomeViewModel(get() as AppDataSource) }*/
+            viewModel { DetailsViewModel(get() as AppDataSource) }
         }
 
         startKoin {

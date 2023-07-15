@@ -12,9 +12,9 @@ import com.example.desafio_android.data.dto.GitHubJavaRepository
 import com.example.desafio_android.databinding.ItemGithubRepositoryBinding
 
 
-class HomeRecyclerViewAdapter(private val onClickListener: OnClickListener) : ListAdapter<GitHubJavaRepository, HomeRecyclerViewAdapter.HomeRecyclerViewViewHolder>(
-    DiffCallBack
-) {
+class HomeRecyclerViewAdapter(private val _viewModel: HomeViewModel
+) : ListAdapter<GitHubJavaRepository, HomeRecyclerViewAdapter.HomeRecyclerViewViewHolder>(
+    DiffCallBack) {
 
     class HomeRecyclerViewViewHolder(private var binding: ItemGithubRepositoryBinding):
         RecyclerView.ViewHolder(binding.root) {
@@ -28,7 +28,7 @@ class HomeRecyclerViewAdapter(private val onClickListener: OnClickListener) : Li
         val gitHubJavaRepository = getItem(position)
         holder.bind(gitHubJavaRepository)
         holder.itemView.setOnClickListener{
-            onClickListener.onClick(gitHubJavaRepository)
+            _viewModel.displayGitHubJavaRepositoryDetails(gitHubJavaRepository)
         }
     }
 
@@ -48,9 +48,5 @@ class HomeRecyclerViewAdapter(private val onClickListener: OnClickListener) : Li
         override fun areContentsTheSame(oldItem: GitHubJavaRepository, newItem: GitHubJavaRepository): Boolean {
             return oldItem.id == newItem.id
         }
-    }
-
-    class OnClickListener(val clickListener: (gitHubJavaRepository: GitHubJavaRepository) -> Unit) {
-        fun onClick(gitHubJavaRepository: GitHubJavaRepository) = clickListener(gitHubJavaRepository)
     }
 }

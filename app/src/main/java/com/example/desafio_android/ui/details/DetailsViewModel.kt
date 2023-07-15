@@ -1,5 +1,6 @@
 package com.example.desafio_android.ui.details
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,6 +24,9 @@ class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
 
     var fullName = ""
 
+    init{
+        Log.e("DetailsViewModel", "DetailsViewModel")
+    }
     fun refresh() {
         viewModelScope.launch(Dispatchers.IO){
             obtenerJavaRepositoryFromGitHub(fullName)

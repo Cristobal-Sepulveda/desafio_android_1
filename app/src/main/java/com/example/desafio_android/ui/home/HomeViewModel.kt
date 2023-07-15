@@ -16,14 +16,14 @@ class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
     private val _status = MutableLiveData<CloudRequestStatus>()
     val status: LiveData<CloudRequestStatus> = _status
 
-    private val _listaEnPantalla = MutableLiveData<List<GitHubJavaRepository>?>()
-    val listaEnPantalla: LiveData<List<GitHubJavaRepository>?> = _listaEnPantalla
+    private val _listToDisplay = MutableLiveData<List<GitHubJavaRepository>?>()
+    val listToDisplay: LiveData<List<GitHubJavaRepository>?> = _listToDisplay
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private val _navigateToSelectedGitHubJavaRepository = MutableLiveData<GitHubJavaRepository>()
-    val navigateToSelectedGitHubJavaRepository: LiveData<GitHubJavaRepository> = _navigateToSelectedGitHubJavaRepository
+    private val _navigateToSelectedGitHubJavaRepository = MutableLiveData<GitHubJavaRepository?>()
+    val shouldINavigate: LiveData<GitHubJavaRepository?> = _navigateToSelectedGitHubJavaRepository
 
     init {
         Log.e("ViewModel", "asd")
@@ -40,7 +40,7 @@ class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
         _dataLoading.postValue(true)
         val task = appDataSource.obtenerJavaRepositoriesFromGitHub()
         _dataLoading.postValue(false)
-        _listaEnPantalla.postValue(task.third)
+        _listToDisplay.postValue(task.third)
         _status.postValue(when(task.first){
             true -> {
                 CloudRequestStatus.DONE
@@ -56,7 +56,7 @@ class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
         _navigateToSelectedGitHubJavaRepository.value = gitHubJavaRepository
     }
 
-    fun displayGitHubJavaRepositoryDetailsCompleted() {
+    fun navigationCompleted() {
         _navigateToSelectedGitHubJavaRepository.value = null
     }
 }
