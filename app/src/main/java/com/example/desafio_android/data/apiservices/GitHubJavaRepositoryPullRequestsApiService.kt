@@ -1,5 +1,7 @@
 package com.example.desafio_android.data.apiservices
 
+import com.example.desafio_android.data.dto.GitHubJavaRepositoryApiResponse
+import com.example.desafio_android.data.dto.GitHubJavaRepositoryPullRequestsResponse
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -7,7 +9,7 @@ import retrofit2.http.GET
 
 interface GitHubJavaRepositoryPullRequestsApiService {
     @GET("pulls")
-    fun getPullRequestsFromRepo(): Call<GitHubJavaRepositoryPullRequestApi>
+    fun getPullRequestsFromRepo(): Call<List<GitHubJavaRepositoryPullRequestsResponse>>
 }
 
 object GitHubJavaRepositoryPullRequestApi {

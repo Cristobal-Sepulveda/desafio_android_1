@@ -43,6 +43,3 @@ class AppRepository(): AppDataSource {
         return@withContext deferred.await()
     }
 }
-
-
-// XMl -> MVVM
