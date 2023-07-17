@@ -1,5 +1,6 @@
 package com.example.desafio_android.ui.details
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -10,15 +11,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.desafio_android.R
-import com.example.desafio_android.data.dto.GitHubJavaRepository
 import com.example.desafio_android.data.dto.ParcelableGitHubJavaRepository
 import com.example.desafio_android.data.dto.RepositoryPullRequest
 import com.example.desafio_android.databinding.FragmentDetailsBinding
-import com.example.desafio_android.ui.home.HomeRecyclerViewAdapter
 import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailsFragment: Fragment() {
@@ -50,6 +48,16 @@ class DetailsFragment: Fragment() {
             it.let { adapter.submitList(it as MutableList<RepositoryPullRequest>) }
         }
 
+        _viewModel.pullRequestOpened.observe(viewLifecycleOwner){
+            _binding!!.detailsTextViewDivider.visibility = View.VISIBLE
+            _binding!!.detailsTextViewOpened.text = "$it opened"
+
+        }
+
+        _viewModel.pullRequestClosed.observe(viewLifecycleOwner){
+            _binding!!.detailsTextViewClosed.text = "$it closed"
+        }
+
         getScreenData(bundle)
 
         return _binding!!.root
@@ -59,7 +67,7 @@ class DetailsFragment: Fragment() {
         lifecycleScope.launch(Dispatchers.IO){
             val fullName = bundle.full_name!!
             _viewModel.fullName = fullName
-            _viewModel.obtenerJavaRepositoryFromGitHub(fullName)
+            _viewModel.gettingRepositoryPullRequests(fullName)
         }
     }
 

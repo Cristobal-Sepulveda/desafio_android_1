@@ -12,8 +12,47 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/container">
 
+        <TextView
+            android:id="@+id/detailsTextViewOpened"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/refresh_layout"
+            android:layout_marginStart="@dimen/space_big"
+            android:layout_marginVertical="@dimen/space_medium"
+            tools:text="16 opened"
+            android:textColor="@color/itemGitHubAmarillo"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/detailsTextViewDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/detailsTextViewOpened"
+            app:layout_constraintTop_toTopOf="@id/detailsTextViewOpened"
+            android:layout_marginStart="@dimen/space_small"
+            android:text="/"
+            android:visibility="invisible"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/detailsTextViewClosed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/detailsTextViewDivider"
+            app:layout_constraintTop_toTopOf="@id/detailsTextViewOpened"
+            android:layout_marginStart="@dimen/space_small"
+            tools:text="800 closed"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            />
         <!--RecyclerView-->
         <com.example.desafio_android.utils.ScrollChildSwipeRefreshLayout
             android:id="@+id/refresh_layout"
@@ -21,8 +60,10 @@
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailsTextViewOpened"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginHorizontal="@dimen/space_small"
+            android:layout_marginBottom="@dimen/space_big"
             app:onRefreshListener="@{viewModel::refresh}"
             app:refreshing="@{viewModel.dataLoading}">
 
@@ -30,12 +71,10 @@
                 android:id="@+id/detailsScreen_recyclerView_listOfRepositoryPullRequests"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:background="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginHorizontal="@dimen/space_small"
-                android:layout_marginBottom="@dimen/space_big"
-                android:background="@color/container"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <ProgressBar

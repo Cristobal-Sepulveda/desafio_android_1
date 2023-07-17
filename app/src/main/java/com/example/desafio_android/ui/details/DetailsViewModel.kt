@@ -1,10 +1,6 @@
 package com.example.desafio_android.ui.details
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
 import android.util.Log
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,6 +22,12 @@ class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
     private val _listInScreen = MutableLiveData<List<RepositoryPullRequest>?>()
     val listInScreen: LiveData<List<RepositoryPullRequest>?> = _listInScreen
 
+    private val _pullRequestOpened = MutableLiveData<Int>()
+    val pullRequestOpened: LiveData<Int> = _pullRequestOpened
+
+    private val _pullRequestClosed = MutableLiveData<Int>()
+    val pullRequestClosed: LiveData<Int> = _pullRequestClosed
+
     var fullName = ""
 
     init{
@@ -34,20 +36,26 @@ class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
 
     fun refresh() {
         viewModelScope.launch(Dispatchers.IO){
-            obtenerJavaRepositoryFromGitHub(fullName)
+            gettingRepositoryPullRequests(fullName)
         }
     }
 
-    suspend fun obtenerJavaRepositoryFromGitHub(fullName: String): Triple<Boolean, Int, List<RepositoryPullRequest>>{
+    suspend fun gettingRepositoryPullRequests(fullName: String): Triple<Boolean, Int, List<RepositoryPullRequest>>{
         _status.postValue(CloudRequestStatus.LOADING)
         _dataLoading.postValue(true)
-        val task = appDataSource.obtenerJavaRepositoryFromGitHub(fullName)
-
+        val task = appDataSource.gettingRepositoryPullRequests(fullName)
+        var opened = 0
+        var closed = 0
         _dataLoading.postValue(false)
         _listInScreen.postValue(task.third)
 
         _status.postValue(when(task.first){
             true -> {
+                task.third.forEach {
+                    if(it.state=="open") opened++ else closed++
+                }
+                _pullRequestOpened.postValue(opened)
+                _pullRequestClosed.postValue(closed)
                 CloudRequestStatus.DONE
             }
             false -> {

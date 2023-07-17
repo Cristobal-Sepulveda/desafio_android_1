@@ -110,7 +110,7 @@
             app:layout_constraintStart_toStartOf="@+id/itemGitHubRepositoryCircleImageViewFotoPerfil"
             app:layout_constraintEnd_toEndOf="@+id/itemGitHubRepositoryCircleImageViewFotoPerfil"
             app:layout_constraintTop_toBottomOf="@+id/itemGitHubRepositoryCircleImageViewFotoPerfil"
-            app:text="@{gitHubJavaRepositoryItem.owner.login}"
+            app:text="@{gitHubJavaRepositoryItem.owner.ownerRealName}"
             android:textSize="@dimen/text_medium"
             android:textColor="@color/nombreGitHubJavaRepository"
             android:textStyle="bold"

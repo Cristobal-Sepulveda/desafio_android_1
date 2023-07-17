@@ -112,6 +112,7 @@ data class GitHubJavaRepositoryOwner(
     val received_events_url: String?,
     val type: String?,
     val site_admin: Boolean?,
+    var ownerRealName: String?,
 )
 
 data class GitHubJavaRepositoryLicense(

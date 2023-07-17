@@ -11,6 +11,10 @@ localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
 def githubApiToken = localProperties.getProperty('githubApiToken')
 
+if (githubApiToken == null) {
+    googleMapsApiKey = System.getenv("GITHUB_API_TOKEN_ENVIRONMENT_VARIABLE")
+}
+
 android {
     namespace 'com.example.desafio_android'
     compileSdk 33
@@ -45,6 +49,7 @@ android {
     buildFeatures {
         dataBinding true
         viewBinding true
+        buildConfig true
     }
 }
 

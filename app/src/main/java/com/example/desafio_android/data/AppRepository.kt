@@ -21,7 +21,6 @@ class AppRepository(): AppDataSource {
         if(apiResponse.isSuccessful){
             val repositories = apiResponse.body()?.items ?: emptyList()
             Log.e("TAG", "AppRepository: obtenerJavaRepositoriesFromGithub\n$repositories")
-
             for(repository in repositories){
                 val secondApiResponse = GitHubUsersApi
                     .cargarUrl("https://api.github.com/users/")
@@ -29,6 +28,7 @@ class AppRepository(): AppDataSource {
                     .execute()
                 if(secondApiResponse.isSuccessful){
                     Log.e("secondApiResponse", "${secondApiResponse.body()}")
+                    repository.owner.ownerRealName = secondApiResponse.body()!!.name
                 }else{
                     val errorBody = secondApiResponse.errorBody()?.string()
                     Log.e("secondApiResponse", "Error: $errorBody")
@@ -42,7 +42,7 @@ class AppRepository(): AppDataSource {
         return@withContext deferred.await()
     }
 
-    override suspend fun obtenerJavaRepositoryFromGitHub(
+    override suspend fun gettingRepositoryPullRequests(
         fullName: String
     ): Triple<Boolean, Int, List<RepositoryPullRequest>> = withContext(Dispatchers.IO)  {
 
