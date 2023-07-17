@@ -15,12 +15,17 @@ import kotlinx.coroutines.withContext
 class AppRepository(): AppDataSource {
 
     override suspend fun obtenerJavaRepositoriesFromGitHub(
+        pageToRequest: Int
     ): Triple<Boolean, Int, List<GitHubJavaRepository>>  = withContext(Dispatchers.IO) {
         val deferred = CompletableDeferred<Triple<Boolean, Int, List<GitHubJavaRepository>>>()
-        val apiResponse = GitHubJavaRepositoriesApi.RETROFIT_GITHUB.getJavaRepositoriesFromGithubApi().execute()
+
+        val apiResponse = GitHubJavaRepositoriesApi
+            .RETROFIT_GITHUB
+            .getJavaRepositoriesFromGithubApi()
+            .execute()
+
         if(apiResponse.isSuccessful){
-            val repositories = apiResponse.body()?.items ?: emptyList()
-            Log.e("TAG", "AppRepository: obtenerJavaRepositoriesFromGithub\n$repositories")
+            val repositories = apiResponse.body()!!.items ?: emptyList()
             for(repository in repositories){
                 val secondApiResponse = GitHubUsersApi
                     .cargarUrl("https://api.github.com/users/")

@@ -19,20 +19,13 @@ class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
     private val _listToDisplay = MutableLiveData<List<GitHubJavaRepository>?>()
     val listToDisplay: LiveData<List<GitHubJavaRepository>?> = _listToDisplay
 
+    private val displayedPages = 0
+
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
     private val _navigateToSelectedGitHubJavaRepository = MutableLiveData<GitHubJavaRepository?>()
     val shouldINavigate: LiveData<GitHubJavaRepository?> = _navigateToSelectedGitHubJavaRepository
-
-    init {
-
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        Log.e("homeViewModel", "onCleared")
-    }
 
     fun refresh() {
         viewModelScope.launch(Dispatchers.IO){
@@ -43,7 +36,7 @@ class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
     suspend fun obtenerJavaRepositoriesFromGitHub(): Triple<Boolean, Int, List<GitHubJavaRepository>>{
         _status.postValue(CloudRequestStatus.LOADING)
         _dataLoading.postValue(true)
-        val task = appDataSource.obtenerJavaRepositoriesFromGitHub()
+        val task = appDataSource.obtenerJavaRepositoriesFromGitHub(displayedPages)
         _dataLoading.postValue(false)
         _listToDisplay.postValue(task.third)
         _status.postValue(when(task.first){
