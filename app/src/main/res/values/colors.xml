@@ -2,11 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="action_bar">#ffffff</color>
+    <color name="action_bar">#000000</color>
     <color name="drawerNavHeader">#f5f5f5</color>
     <color name="drawerNavFooter">#f5f5f5</color>
     <color name="container">#f5f5f5</color>
     <color name="itemGitHubAmarillo">#DF9305</color>
     <color name="divider">#aaaaaa</color>
     <color name="nombreGitHubJavaRepository">#3E77AA</color>
+    <color name="grafitoOscuro">#343438</color>
 </resources>

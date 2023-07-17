@@ -9,56 +9,56 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.example.desafio_android.R
 import com.example.desafio_android.data.dto.GitHubJavaRepository
+import com.example.desafio_android.data.dto.ParcelableGitHubJavaRepository
 import com.example.desafio_android.data.dto.RepositoryPullRequest
 import com.example.desafio_android.databinding.FragmentDetailsBinding
 import com.example.desafio_android.ui.home.HomeRecyclerViewAdapter
+import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DetailsFragment(): Fragment() {
+class DetailsFragment: Fragment() {
     private var _binding: FragmentDetailsBinding? = null
-    private val _viewModel: DetailsViewModel by inject()
+    private val _viewModel: DetailsViewModel by viewModel()
     private lateinit var adapter: DetailsRecyclerViewAdapter
-    // by viewModel()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         _binding!!.viewModel = _viewModel
-        _binding!!.lifecycleOwner = this
+        _binding!!.lifecycleOwner = viewLifecycleOwner
+
+        val bundle =  DetailsFragmentArgs
+            .fromBundle(requireArguments())
+            .parcelableGitHubJavaRepository
 
         adapter = DetailsRecyclerViewAdapter(DetailsRecyclerViewAdapter.OnClickListener{
             openPullRequestInChrome(it)
         })
 
         _binding!!.detailsScreenRecyclerViewListOfRepositoryPullRequests.adapter = adapter
+        requireActivity().findViewById<MaterialToolbar>(R.id.toolbar).title = bundle.name
 
         _viewModel.listInScreen.observe(viewLifecycleOwner) {
             it.let { adapter.submitList(it as MutableList<RepositoryPullRequest>) }
         }
 
-
-        getScreenData()
+        getScreenData(bundle)
 
         return _binding!!.root
     }
 
-    private fun getScreenData() {
+    private fun getScreenData(bundle: ParcelableGitHubJavaRepository) {
         lifecycleScope.launch(Dispatchers.IO){
-            val fullName = DetailsFragmentArgs
-                .fromBundle(requireArguments())
-                .parcelableGitHubJavaRepository
-                .full_name!!
-
+            val fullName = bundle.full_name!!
             _viewModel.fullName = fullName
-
             _viewModel.obtenerJavaRepositoryFromGitHub(fullName)
         }
     }
@@ -75,8 +75,5 @@ class DetailsFragment(): Fragment() {
 
         }
     }
-
-
-
 }
 

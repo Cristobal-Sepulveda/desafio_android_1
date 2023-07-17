@@ -18,7 +18,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment: Fragment() {
     private var _binding: FragmentHomeBinding? = null
-    /*private val _viewModel: HomeViewModel by inject()*/
     private val _viewModel: HomeViewModel by viewModel()
     private lateinit var adapter: HomeRecyclerViewAdapter
 
@@ -38,8 +37,8 @@ class HomeFragment: Fragment() {
             adapter.submitList(it as MutableList<GitHubJavaRepository>)
         }
 
-        _viewModel.shouldINavigate.observe(viewLifecycleOwner) {
-            it?.let{
+        _viewModel.shouldINavigate.observe(viewLifecycleOwner) { gitHubJavaRepository ->
+            gitHubJavaRepository?.let {
                 findNavController().navigate(
                     HomeFragmentDirections
                         .actionNavigationHomeToNavigationDetails(it.asParcelable())
@@ -51,12 +50,6 @@ class HomeFragment: Fragment() {
         obtenerJavaRepositoriesFromGitHub()
         return _binding!!.root
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.e("Home Fragment", "onDestroy")
-    }
-
 
     private fun obtenerJavaRepositoriesFromGitHub(){
         lifecycleScope.launch(Dispatchers.IO) {

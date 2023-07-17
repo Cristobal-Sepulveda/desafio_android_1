@@ -5,8 +5,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
+import com.bumptech.glide.Glide
 import com.example.desafio_android.utils.Constants.CloudRequestStatus
 
 
@@ -85,3 +87,11 @@ fun bindCambiarLongAString(textView: TextView, long: Long){
     textView.text = long.toString()
 }
 
+@BindingAdapter("imageUrl")
+fun bindImage(imgView: ImageView, imgUrl: String){
+    Log.e("imageUrl", "bindImage")
+    val imgUri = imgUrl.toUri().buildUpon()?.scheme("https")?.build()
+    Glide.with(imgView.context)
+        .load(imgUri)
+        .into(imgView)
+}

@@ -22,6 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/space_medium"
             app:onRefreshListener="@{viewModel::refresh}"
             app:refreshing="@{viewModel.dataLoading}">
 

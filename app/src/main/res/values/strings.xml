@@ -8,4 +8,5 @@
     <string name="error_al_intentar_obtener_la_lista_de_usuarios_desde_la_nube">Error al obtener datos desde la nube</string>
     <string name="fab_content_subir">Subir</string>
     <string name="cantidad_de_forks">Cantidad de forks\n</string>
+    <string name="home_fragment_title">Github JavaPop</string>
 </resources>

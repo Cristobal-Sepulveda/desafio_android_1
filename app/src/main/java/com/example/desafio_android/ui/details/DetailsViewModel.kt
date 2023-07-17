@@ -1,6 +1,10 @@
 package com.example.desafio_android.ui.details
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,6 +31,7 @@ class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
     init{
         Log.e("DetailsViewModel", "DetailsViewModel")
     }
+
     fun refresh() {
         viewModelScope.launch(Dispatchers.IO){
             obtenerJavaRepositoryFromGitHub(fullName)

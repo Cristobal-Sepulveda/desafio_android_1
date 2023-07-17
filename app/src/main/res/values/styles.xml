@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <style name="ActionBar">
-        <item name="colorPrimary">@color/action_bar</item>
-        <item name="colorPrimaryDark">@color/action_bar</item>
+        <item name="background">@color/action_bar</item>
     </style>
 
     <style name="buttons" parent ="@style/Widget.Material3.Button">

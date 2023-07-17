@@ -26,7 +26,12 @@ class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
     val shouldINavigate: LiveData<GitHubJavaRepository?> = _navigateToSelectedGitHubJavaRepository
 
     init {
-        Log.e("ViewModel", "asd")
+
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.e("homeViewModel", "onCleared")
     }
 
     fun refresh() {

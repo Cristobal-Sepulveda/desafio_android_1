@@ -17,10 +17,10 @@ class MyApp : Application() {
 
         val myModule = module {
             single { AppRepository() as AppDataSource }
-            viewModel{ HomeViewModel(get() as AppDataSource) }
-            /*single { HomeViewModel(get() as AppDataSource) }*/
+            viewModel { HomeViewModel(get() as AppDataSource) }
             viewModel { DetailsViewModel(get() as AppDataSource) }
         }
+
 
         startKoin {
             androidContext(this@MyApp)
