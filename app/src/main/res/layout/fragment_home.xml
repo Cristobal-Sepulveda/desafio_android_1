@@ -22,7 +22,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/space_medium"
+            android:layout_marginVertical="@dimen/space_big"
+            android:layout_marginHorizontal="@dimen/space_small"
             app:onRefreshListener="@{viewModel::refresh}"
             app:refreshing="@{viewModel.dataLoading}">
 
@@ -33,9 +34,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginHorizontal="@dimen/space_small"
-                android:layout_marginBottom="@dimen/space_big"
-                android:background="@color/container"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <ProgressBar

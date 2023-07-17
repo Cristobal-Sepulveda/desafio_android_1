@@ -3,6 +3,7 @@
     <style name="Base.Theme.Desafioandroid" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="background">@color/container</item>
     </style>
 
     <style name="Theme.Desafioandroid" parent="Base.Theme.Desafioandroid" >

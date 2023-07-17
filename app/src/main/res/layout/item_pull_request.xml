@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_medium">
 
         <TextView
             android:id="@+id/itemPullRequest_textView_title"
@@ -23,42 +24,57 @@
             android:text="@{pullRequestItem.title}"
             android:textColor="@color/nombreGitHubJavaRepository"
             android:textStyle="bold"
-            android:textSize="@dimen/text_big"
-            tools:text="Nombre repositorio"
+            android:textSize="@dimen/text_bigger"
+            tools:text="Nombre Pull Request"
             />
 
         <TextView
             android:id="@+id/itemPullRequest_textView_description"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.7"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/itemPullRequest_textView_title"
             android:text="@{pullRequestItem.body}"
-            android:textSize="@dimen/text_medium"
+            android:textSize="@dimen/text_big"
+            android:maxLines="5"
             tools:text="Descripción descripcion"
             />
 
-        <ImageView
-            android:id="@+id/itemPullRequest_imageView_userProfilePhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/itemPullRequestCircleImageViewFotoPerfil"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/itemPullRequest_textView_description"
-            android:src="@drawable/baseline_fork_right_24"
-            android:contentDescription="@string/cantidad_de_forks"
+            android:layout_marginTop="@dimen/space_small"
+            tools:background="@color/black"
             />
 
         <TextView
-            android:id="@+id/itemPullRequest_textView_userProfileName"
+            android:id="@+id/itemPullRequestTextViewUserProfileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/itemPullRequest_imageView_userProfilePhoto"
-            app:layout_constraintTop_toTopOf="@+id/itemPullRequest_imageView_userProfilePhoto"
+            app:layout_constraintStart_toEndOf="@+id/itemPullRequestCircleImageViewFotoPerfil"
+            app:layout_constraintTop_toTopOf="@+id/itemPullRequestCircleImageViewFotoPerfil"
+            android:layout_marginStart="@dimen/space_small"
             android:text="@{pullRequestItem.user.login}"
             android:textColor="@color/nombreGitHubJavaRepository"
             android:textStyle="bold"
             android:textSize="@dimen/text_medium"
-            tools:text="640"
+            tools:text="username"
+            />
+
+        <TextView
+            android:id="@+id/itemPullRequestTextViewUserProfileNickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/itemPullRequestCircleImageViewFotoPerfil"
+            app:layout_constraintTop_toBottomOf="@+id/itemPullRequestTextViewUserProfileName"
+            android:layout_marginStart="@dimen/space_small"
+            android:text="@{pullRequestItem.user.login}"
+            android:textSize="@dimen/text_medium"
+            tools:text="username"
             />
 
         <com.google.android.material.divider.MaterialDivider
@@ -67,7 +83,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/itemPullRequest_imageView_userProfilePhoto"
+            app:layout_constraintTop_toBottomOf="@id/itemPullRequestTextViewUserProfileNickName"
             android:layout_marginTop="@dimen/space_medium"
             app:dividerColor="@color/divider"
             />
