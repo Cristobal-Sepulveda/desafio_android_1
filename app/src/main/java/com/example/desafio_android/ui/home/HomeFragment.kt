@@ -21,6 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeFragment: Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val _viewModel: HomeViewModel by viewModel()
+
     private lateinit var adapter: HomeRecyclerViewAdapter
 
     override fun onCreateView(
@@ -29,7 +30,7 @@ class HomeFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         adapter = HomeRecyclerViewAdapter(_viewModel)
-        
+        //var aux = BuildConfig.GIT
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         _binding!!.viewModel = _viewModel
         _binding!!.lifecycleOwner = viewLifecycleOwner
@@ -45,7 +46,6 @@ class HomeFragment: Fragment() {
                     //the user has scroll the list until his last item
                     //when this happen i get the next page
                     if (totalItemCount > 0 && lastVisibleItemPosition == totalItemCount - 1) {
-                        _viewModel.
                         Log.e("RecyclerView", "Se llego al final de la lista!")
                     }
                 }

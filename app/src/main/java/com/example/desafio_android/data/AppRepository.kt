@@ -1,6 +1,7 @@
 package com.example.desafio_android.data
 
 import android.util.Log
+import com.example.desafio_android.BuildConfig
 import com.example.desafio_android.R
 import com.example.desafio_android.data.apiservices.GitHubJavaRepositoriesApi
 import com.example.desafio_android.data.apiservices.GitHubJavaRepositoryPullRequestApi
@@ -10,6 +11,7 @@ import com.example.desafio_android.data.dto.RepositoryPullRequest
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+
 
 
 class AppRepository(): AppDataSource {
@@ -29,8 +31,9 @@ class AppRepository(): AppDataSource {
             for(repository in repositories){
                 val secondApiResponse = GitHubUsersApi
                     .cargarUrl("https://api.github.com/users/")
-                    .getUserData(repository.owner!!.login!!, "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")
+                    .getUserData(repository.owner!!.login!!, BuildConfig.GITHUB_API_TOKEN)
                     .execute()
+
                 if(secondApiResponse.isSuccessful){
                     Log.e("secondApiResponse", "${secondApiResponse.body()}")
                     repository.owner.ownerRealName = secondApiResponse.body()!!.name
@@ -52,8 +55,8 @@ class AppRepository(): AppDataSource {
     ): Triple<Boolean, Int, List<RepositoryPullRequest>> = withContext(Dispatchers.IO)  {
 
         val deferred = CompletableDeferred<Triple<Boolean, Int, List<RepositoryPullRequest>>>()
-
-        val baseUrl = "https://api.github.com/repos/$fullName/"
+        val baseUrl = "${BuildConfig.GITHUB_API_BASE_URL}repos/alibaba/arthas/"
+        //val baseUrl = "https://api.github.com/repos/$fullName/"
         val apiService = GitHubJavaRepositoryPullRequestApi.create(baseUrl)
         val request = apiService.getPullRequestsFromRepo().execute()
 

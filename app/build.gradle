@@ -6,15 +6,6 @@ plugins {
     id 'androidx.navigation.safeargs'
 }
 
-def localProperties = new Properties()
-localProperties.load(new FileInputStream(rootProject.file("local.properties")))
-
-def githubApiToken = localProperties.getProperty('githubApiToken')
-
-if (githubApiToken == null) {
-    googleMapsApiKey = System.getenv("GITHUB_API_TOKEN_ENVIRONMENT_VARIABLE")
-}
-
 android {
     namespace 'com.example.desafio_android'
     compileSdk 33
@@ -26,37 +17,41 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders = [
-                githubApiToken : githubApiToken,
-        ]
-        buildConfigField "String", "GITHUB_API_TOKEN", "\"$githubApiToken\""
+        buildConfigField "String", "GITHUB_API_TOKEN", "\"${System.getenv("GITHUB_API_TOKEN")}\""
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "GITHUB_API_BASE_URL" , "\"https://api.github.com/\""
+        }
+        debug {
+            buildConfigField "String", "GITHUB_API_BASE_URL" , "\"http://192.168.1.138:8080/\""
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = '17'
-    }
+
     buildFeatures {
         dataBinding true
         viewBinding true
         buildConfig true
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
@@ -96,8 +91,8 @@ dependencies {
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.14.0'
 
     //Navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
