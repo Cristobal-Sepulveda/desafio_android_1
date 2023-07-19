@@ -31,39 +31,34 @@ class DetailsFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        _binding!!.viewModel = _viewModel
-        _binding!!.lifecycleOwner = viewLifecycleOwner
-
         val bundle =  DetailsFragmentArgs
             .fromBundle(requireArguments())
             .parcelableGitHubJavaRepository
+
+        requireActivity()
+            .findViewById<MaterialToolbar>(R.id.toolbar)
+            .title = bundle.name
+
+        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
+        _binding!!.viewModel = _viewModel
+        _binding!!.lifecycleOwner = viewLifecycleOwner
 
         adapter = DetailsRecyclerViewAdapter(DetailsRecyclerViewAdapter.OnClickListener{
             openPullRequestInChrome(it)
         })
 
         _binding!!.detailsScreenRecyclerViewListOfRepositoryPullRequests.adapter = adapter
-        requireActivity().findViewById<MaterialToolbar>(R.id.toolbar).title = bundle.name
+
 
         _viewModel.listInScreen.observe(viewLifecycleOwner) {
             it.let { adapter.submitList(it as MutableList<RepositoryPullRequest>) }
         }
 
-        _viewModel.pullRequestOpened.observe(viewLifecycleOwner){
+        _viewModel.pullRequestsOpenedAndClosed.observe(viewLifecycleOwner){
             _binding!!.detailsTextViewDivider.visibility = View.VISIBLE
-            _binding!!.detailsTextViewOpened.text = "$it opened"
+            _binding!!.detailsTextViewOpened.text = "${it.first} opened"
+            _binding!!.detailsTextViewClosed.text = "${it.second} closed"
 
-        }
-
-        _viewModel.pullRequestClosed.observe(viewLifecycleOwner){
-            _binding!!.detailsTextViewClosed.text = "$it closed"
-        }
-
-        _viewModel.status.observe(viewLifecycleOwner){ status ->
-            if(status == Constants.CloudRequestStatus.ERROR){
-                Toast.makeText(requireContext(), "Error", Toast.LENGTH_LONG).show()
-            }
         }
 
         getScreenData(bundle)

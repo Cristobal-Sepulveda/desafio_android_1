@@ -12,40 +12,28 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
 
-    private val _status = MutableLiveData<CloudRequestStatus>()
-    val status: LiveData<CloudRequestStatus> = _status
+    private val _dataLoading = MutableLiveData<Boolean>()
+    val dataLoading: LiveData<Boolean> = _dataLoading
 
     private val _listToDisplay = MutableLiveData<MutableList<*>?>()
     val listToDisplay: LiveData<MutableList<*>?> = _listToDisplay
 
     private val displayedPages = 0
 
-    private val _dataLoading = MutableLiveData<Boolean>()
-    val dataLoading: LiveData<Boolean> = _dataLoading
-
     private val _navigateToSelectedGitHubJavaRepository = MutableLiveData<GitHubJavaRepository?>()
     val shouldINavigate: LiveData<GitHubJavaRepository?> = _navigateToSelectedGitHubJavaRepository
 
-    fun refresh() {
-        viewModelScope.launch(Dispatchers.IO){
-            getJavaRepositories()
-        }
-    }
+    fun refresh() = getJavaRepositories()
 
     fun getJavaRepositories(){
         viewModelScope.launch{
-            _status.postValue(CloudRequestStatus.LOADING)
             _dataLoading.postValue(true)
             val apiRequestResponse = appDataSource.getJavaRepositories(displayedPages)
-            _dataLoading.postValue(false)
             _listToDisplay.postValue(apiRequestResponse.dataObtained)
-            _status.postValue(when(apiRequestResponse.wasSuccess){
-                true -> {
-                    CloudRequestStatus.DONE
-                }
-                false -> {
-                    CloudRequestStatus.ERROR
-                }
+
+            _dataLoading.postValue(when(apiRequestResponse.wasSuccess){
+                true -> false
+                false -> null
             })
         }
     }

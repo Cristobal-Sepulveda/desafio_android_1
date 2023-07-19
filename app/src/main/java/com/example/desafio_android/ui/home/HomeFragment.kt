@@ -68,12 +68,6 @@ class HomeFragment: Fragment() {
             }
         }
 
-        _viewModel.status.observe(viewLifecycleOwner){ status ->
-            if(status == Constants.CloudRequestStatus.ERROR){
-                Toast.makeText(requireContext(), "Error", Toast.LENGTH_LONG).show()
-            }
-        }
-
         _viewModel.getJavaRepositories()
         return _binding!!.root
     }

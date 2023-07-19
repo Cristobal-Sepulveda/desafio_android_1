@@ -36,24 +36,9 @@ fun bindStatusErrorCircularProgress(progressBar: ProgressBar, status: LiveData<C
 }
 
 @BindingAdapter("cloudRequestStatusImage")
-fun bindStatusErrorImage(imageView: ImageView, status: LiveData<CloudRequestStatus>?) {
-    Log.d("BindingAdapter", "bindStatusErrorImage: ${status?.value}")
-    when (status?.value) {
-        CloudRequestStatus.LOADING -> {
-            imageView.visibility = View.GONE
-        }
-        CloudRequestStatus.ERROR -> {
-            imageView.visibility = View.VISIBLE
-        }
-        CloudRequestStatus.DONE -> {
-            imageView.visibility = View.GONE
-        }
-        CloudRequestStatus.DONE_WITH_NO_DATA -> {
-            imageView.visibility = View.GONE
-        }
-        else -> {
-            imageView.visibility = View.GONE
-        }
+fun bindStatusErrorImage(imageView: ImageView, status: LiveData<Boolean?>) {
+    if(status.value == null){
+        imageView.visibility = View.VISIBLE
     }
 }
 
