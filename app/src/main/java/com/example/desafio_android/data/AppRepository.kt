@@ -23,12 +23,14 @@ class AppRepository(): AppDataSource {
             if(apiResponse.isSuccessful){
                 val repositories = apiResponse.body()?.items?.toMutableList() ?: mutableListOf()
                 for (repository in repositories) {
+                    val loginName = repository.owner?.login ?: ""
+
                     val secondApiResponse = GitHubUsersApi
                         .cargarUrl("${BuildConfig.GITHUB_API_BASE_URL}users/")
-                        .getUserData(repository.owner!!.login!!, BuildConfig.GITHUB_API_TOKEN)
+                        .getUserData(loginName, BuildConfig.GITHUB_API_TOKEN)
 
                     if (secondApiResponse.isSuccessful) {
-                        repository.owner.ownerRealName = secondApiResponse.body()?.name
+                        repository.owner?.ownerRealName = secondApiResponse.body()?.name
                     }
                 }
                 return@withContext ApiRequestResponse(true, repositories)

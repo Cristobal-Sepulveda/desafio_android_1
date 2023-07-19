@@ -44,7 +44,7 @@
                 app:layout_constraintEnd_toEndOf="@id/homeScreen_recyclerView_listadoDeRepositories"
                 app:layout_constraintTop_toTopOf="@id/homeScreen_recyclerView_listadoDeRepositories"
                 app:layout_constraintBottom_toBottomOf="@id/homeScreen_recyclerView_listadoDeRepositories"
-                app:cloudRequestStatusImage="@{viewModel.dataLoading}"
+                app:apiRequestErrorImage="@{viewModel.dataLoading}"
                 android:src="@drawable/ic_connection_error_100"
                 android:contentDescription="@string/error_al_intentar_obtener_la_lista_de_usuarios_desde_la_nube" />
 
