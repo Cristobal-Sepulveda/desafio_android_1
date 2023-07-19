@@ -1,14 +1,11 @@
 package com.example.desafio_android.ui.details
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.desafio_android.data.AppDataSource
-import com.example.desafio_android.data.dto.RepositoryPullRequest
-import com.example.desafio_android.utils.Constants.CloudRequestStatus
-import kotlinx.coroutines.Dispatchers
+import com.example.desafio_android.data.dto.GitHubJavaRepositoryPullRequests
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
@@ -36,8 +33,8 @@ class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
             _dataLoading.postValue(when(apiRequestResponse.wasSuccess){
                 true -> {
                     apiRequestResponse.dataObtained.forEach {
-                        val repositoryPullRequest = it as RepositoryPullRequest
-                        if(repositoryPullRequest.state=="open") opened++ else closed++
+                        val gitHubJavaRepositoryPullRequests = it as GitHubJavaRepositoryPullRequests
+                        if(gitHubJavaRepositoryPullRequests.state=="open") opened++ else closed++
                     }
                     false
                 }

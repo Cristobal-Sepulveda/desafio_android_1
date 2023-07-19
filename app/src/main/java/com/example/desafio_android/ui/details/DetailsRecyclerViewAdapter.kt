@@ -5,16 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.desafio_android.data.dto.GitHubJavaRepository
-import com.example.desafio_android.data.dto.RepositoryPullRequest
-import com.example.desafio_android.databinding.ItemGithubRepositoryBinding
+import com.example.desafio_android.data.dto.GitHubJavaRepositoryPullRequests
 import com.example.desafio_android.databinding.ItemPullRequestBinding
 
 
 class DetailsRecyclerViewAdapter(
     private val onClickListener: OnClickListener
 ) : ListAdapter<
-        RepositoryPullRequest,
+        GitHubJavaRepositoryPullRequests,
         DetailsRecyclerViewAdapter.DetailsRecyclerViewViewHolder
     >(DiffCallBack) {
 
@@ -22,8 +20,8 @@ class DetailsRecyclerViewAdapter(
         private var binding: ItemPullRequestBinding
     ): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(repositoryPullRequest: RepositoryPullRequest) {
-            binding.pullRequestItem = repositoryPullRequest
+        fun bind(gitHubJavaRepositoryPullRequests: GitHubJavaRepositoryPullRequests) {
+            binding.pullRequestItem = gitHubJavaRepositoryPullRequests
             binding.executePendingBindings()
         }
     }
@@ -44,19 +42,19 @@ class DetailsRecyclerViewAdapter(
         )
     }
 
-    object DiffCallBack: DiffUtil.ItemCallback<RepositoryPullRequest>(){
-        override fun areItemsTheSame(oldItem: RepositoryPullRequest,
-                                     newItem: RepositoryPullRequest): Boolean {
+    object DiffCallBack: DiffUtil.ItemCallback<GitHubJavaRepositoryPullRequests>(){
+        override fun areItemsTheSame(oldItem: GitHubJavaRepositoryPullRequests,
+                                     newItem: GitHubJavaRepositoryPullRequests): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: RepositoryPullRequest,
-                                        newItem: RepositoryPullRequest): Boolean {
+        override fun areContentsTheSame(oldItem: GitHubJavaRepositoryPullRequests,
+                                        newItem: GitHubJavaRepositoryPullRequests): Boolean {
             return oldItem.id == newItem.id
         }
     }
 
-    class OnClickListener(val clickListener: (repositoryPullRequest: RepositoryPullRequest) -> Unit) {
-        fun onClick(repositoryPullRequest: RepositoryPullRequest) = clickListener(repositoryPullRequest)
+    class OnClickListener(val clickListener: (gitHubJavaRepositoryPullRequests: GitHubJavaRepositoryPullRequests) -> Unit) {
+        fun onClick(gitHubJavaRepositoryPullRequests: GitHubJavaRepositoryPullRequests) = clickListener(gitHubJavaRepositoryPullRequests)
     }
 }

@@ -2,6 +2,7 @@ package com.example.desafio_android.utils
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
@@ -14,6 +15,11 @@ fun bindApiRequestErrorImage(imageView: ImageView, status: LiveData<Boolean?>) {
     if(status.value == null){
         imageView.visibility = View.VISIBLE
     }
+}
+
+@BindingAdapter("cambiarLongAString")
+fun bindCambiarLongAString(textView: TextView, long: Long){
+    textView.text = long.toString()
 }
 
 @BindingAdapter("imageUrl")

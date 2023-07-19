@@ -1,22 +1,22 @@
 package com.example.desafio_android.data.apiservices
 
-import com.example.desafio_android.data.dto.GitHubJavaRepositoryApiResponse
+import com.example.desafio_android.data.dto.GitHubJavaRepositories
 import com.example.desafio_android.utils.Constants.apiUrl
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 interface GitHubJavaRepositoriesApiService {
 
     @GET("search/repositories?q=language:Java&sort=stars&page=1")
-    suspend fun getJavaRepositoriesFromGithubApi(): Response<GitHubJavaRepositoryApiResponse>
+    suspend fun getJavaRepositoriesFromGithubApi(): Response<GitHubJavaRepositories>
 
 }
 
 object GitHubJavaRepositoriesApi{
     private val retrofitGitHub = Retrofit.Builder()
-        .addConverterFactory(MoshiProvider.moshiConverterFactory)
+        .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(apiUrl)
         .build()
 

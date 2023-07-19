@@ -1,6 +1,5 @@
 package com.example.desafio_android.ui.details
 
-import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -8,14 +7,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.desafio_android.R
 import com.example.desafio_android.data.dto.ParcelableGitHubJavaRepository
-import com.example.desafio_android.data.dto.RepositoryPullRequest
+import com.example.desafio_android.data.dto.GitHubJavaRepositoryPullRequests
 import com.example.desafio_android.databinding.FragmentDetailsBinding
-import com.example.desafio_android.utils.Constants
 import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -51,7 +48,7 @@ class DetailsFragment: Fragment() {
 
 
         _viewModel.listInScreen.observe(viewLifecycleOwner) {
-            it.let { adapter.submitList(it as MutableList<RepositoryPullRequest>) }
+            it.let { adapter.submitList(it as MutableList<GitHubJavaRepositoryPullRequests>) }
         }
 
         _viewModel.pullRequestsOpenedAndClosed.observe(viewLifecycleOwner){
@@ -74,7 +71,7 @@ class DetailsFragment: Fragment() {
         }
     }
 
-    private fun openPullRequestInChrome(it: RepositoryPullRequest) {
+    private fun openPullRequestInChrome(it: GitHubJavaRepositoryPullRequests) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.apply {
             data = Uri.parse(it.html_url)
