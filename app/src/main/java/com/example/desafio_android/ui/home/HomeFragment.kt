@@ -5,13 +5,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.desafio_android.R
 import com.example.desafio_android.data.dto.GitHubJavaRepository
 import com.example.desafio_android.databinding.FragmentHomeBinding
+import com.example.desafio_android.utils.Constants
 import com.example.desafio_android.utils.showToastInMainThread
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,7 +33,6 @@ class HomeFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         adapter = HomeRecyclerViewAdapter(_viewModel)
-        //var aux = BuildConfig.GIT
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         _binding!!.viewModel = _viewModel
         _binding!!.lifecycleOwner = viewLifecycleOwner
@@ -66,14 +68,14 @@ class HomeFragment: Fragment() {
             }
         }
 
-        obtenerJavaRepositoriesFromGitHub()
+        _viewModel.status.observe(viewLifecycleOwner){ status ->
+            if(status == Constants.CloudRequestStatus.ERROR){
+                Toast.makeText(requireContext(), "Error", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        _viewModel.getJavaRepositories()
         return _binding!!.root
     }
 
-    private fun obtenerJavaRepositoriesFromGitHub(){
-        lifecycleScope.launch(Dispatchers.IO) {
-            val task = _viewModel.obtenerJavaRepositoriesFromGitHub()
-            if (!task.first) showToastInMainThread(requireContext(), task.second)
-        }
-    }
 }

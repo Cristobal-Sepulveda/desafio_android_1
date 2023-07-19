@@ -19,8 +19,8 @@ class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private val _listInScreen = MutableLiveData<List<RepositoryPullRequest>?>()
-    val listInScreen: LiveData<List<RepositoryPullRequest>?> = _listInScreen
+    private val _listInScreen = MutableLiveData<List<*>?>()
+    val listInScreen: LiveData<List<*>?> = _listInScreen
 
     private val _pullRequestOpened = MutableLiveData<Int>()
     val pullRequestOpened: LiveData<Int> = _pullRequestOpened
@@ -35,33 +35,33 @@ class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
     }
 
     fun refresh() {
-        viewModelScope.launch(Dispatchers.IO){
-            gettingRepositoryPullRequests(fullName)
-        }
+        gettingRepositoryPullRequests(fullName)
     }
 
-    suspend fun gettingRepositoryPullRequests(fullName: String): Triple<Boolean, Int, List<RepositoryPullRequest>>{
-        _status.postValue(CloudRequestStatus.LOADING)
-        _dataLoading.postValue(true)
-        val task = appDataSource.gettingRepositoryPullRequests(fullName)
-        var opened = 0
-        var closed = 0
-        _dataLoading.postValue(false)
-        _listInScreen.postValue(task.third)
+    fun gettingRepositoryPullRequests(fullName: String){
+        viewModelScope.launch{
+            var opened = 0
+            var closed = 0
+            _status.postValue(CloudRequestStatus.LOADING)
+            _dataLoading.postValue(true)
+            val apiRequestResponse = appDataSource.getRepositoryPullRequests(fullName)
+            _listInScreen.postValue(apiRequestResponse.dataObtained)
+            _dataLoading.postValue(false)
 
-        _status.postValue(when(task.first){
-            true -> {
-                task.third.forEach {
-                    if(it.state=="open") opened++ else closed++
+            _status.postValue(when(apiRequestResponse.wasSuccess){
+                true -> {
+                    apiRequestResponse.dataObtained.forEach {
+                        val repositoryPullRequest = it as RepositoryPullRequest
+                        if(repositoryPullRequest.state=="open") opened++ else closed++
+                    }
+                    CloudRequestStatus.DONE
                 }
-                _pullRequestOpened.postValue(opened)
-                _pullRequestClosed.postValue(closed)
-                CloudRequestStatus.DONE
-            }
-            false -> {
-                CloudRequestStatus.ERROR
-            }
-        })
-        return task
+                false -> {
+                    CloudRequestStatus.ERROR
+                }
+            })
+            _pullRequestOpened.postValue(opened)
+            _pullRequestClosed.postValue(closed)
+        }
     }
 }

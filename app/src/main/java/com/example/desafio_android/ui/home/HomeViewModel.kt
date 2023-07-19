@@ -1,6 +1,5 @@
 package com.example.desafio_android.ui.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,8 +15,8 @@ class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
     private val _status = MutableLiveData<CloudRequestStatus>()
     val status: LiveData<CloudRequestStatus> = _status
 
-    private val _listToDisplay = MutableLiveData<List<GitHubJavaRepository>?>()
-    val listToDisplay: LiveData<List<GitHubJavaRepository>?> = _listToDisplay
+    private val _listToDisplay = MutableLiveData<MutableList<*>?>()
+    val listToDisplay: LiveData<MutableList<*>?> = _listToDisplay
 
     private val displayedPages = 0
 
@@ -29,25 +28,26 @@ class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
 
     fun refresh() {
         viewModelScope.launch(Dispatchers.IO){
-            obtenerJavaRepositoriesFromGitHub()
+            getJavaRepositories()
         }
     }
 
-    suspend fun obtenerJavaRepositoriesFromGitHub(): Triple<Boolean, Int, List<GitHubJavaRepository>>{
-        _status.postValue(CloudRequestStatus.LOADING)
-        _dataLoading.postValue(true)
-        val task = appDataSource.obtenerJavaRepositoriesFromGitHub(displayedPages)
-        _dataLoading.postValue(false)
-        _listToDisplay.postValue(task.third)
-        _status.postValue(when(task.first){
-            true -> {
-                CloudRequestStatus.DONE
-            }
-            false -> {
-                CloudRequestStatus.ERROR
-            }
-        })
-        return task
+    fun getJavaRepositories(){
+        viewModelScope.launch{
+            _status.postValue(CloudRequestStatus.LOADING)
+            _dataLoading.postValue(true)
+            val apiRequestResponse = appDataSource.getJavaRepositories(displayedPages)
+            _dataLoading.postValue(false)
+            _listToDisplay.postValue(apiRequestResponse.dataObtained)
+            _status.postValue(when(apiRequestResponse.wasSuccess){
+                true -> {
+                    CloudRequestStatus.DONE
+                }
+                false -> {
+                    CloudRequestStatus.ERROR
+                }
+            })
+        }
     }
 
     fun displayGitHubJavaRepositoryDetails(gitHubJavaRepository: GitHubJavaRepository) {

@@ -1,10 +1,10 @@
 package com.example.desafio_android.data
 
-import com.example.desafio_android.data.dto.GitHubJavaRepository
 import com.example.desafio_android.data.dto.RepositoryPullRequest
+import com.example.desafio_android.utils.ApiRequestResponse
 
 interface AppDataSource {
-    suspend fun obtenerJavaRepositoriesFromGitHub(pageToRequest: Int): Triple<Boolean, Int, List<GitHubJavaRepository>>
+    suspend fun getJavaRepositories(pageToRequest: Int): ApiRequestResponse
 
-    suspend fun gettingRepositoryPullRequests(fullName: String): Triple<Boolean,Int, List<RepositoryPullRequest>>
+    suspend fun getRepositoryPullRequests(fullName: String): ApiRequestResponse
 }

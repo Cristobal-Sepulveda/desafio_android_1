@@ -1,6 +1,5 @@
 package com.example.desafio_android.data
 
-import android.util.Log
 import com.example.desafio_android.BuildConfig
 import com.example.desafio_android.R
 import com.example.desafio_android.data.apiservices.GitHubJavaRepositoriesApi
@@ -8,65 +7,56 @@ import com.example.desafio_android.data.apiservices.GitHubJavaRepositoryPullRequ
 import com.example.desafio_android.data.apiservices.GitHubUsersApi
 import com.example.desafio_android.data.dto.GitHubJavaRepository
 import com.example.desafio_android.data.dto.RepositoryPullRequest
-import kotlinx.coroutines.CompletableDeferred
+import com.example.desafio_android.utils.ApiRequestResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-
-
 class AppRepository(): AppDataSource {
 
-    override suspend fun obtenerJavaRepositoriesFromGitHub(
+    override suspend fun getJavaRepositories(
         pageToRequest: Int
-    ): Triple<Boolean, Int, List<GitHubJavaRepository>>  = withContext(Dispatchers.IO) {
-        val deferred = CompletableDeferred<Triple<Boolean, Int, List<GitHubJavaRepository>>>()
+    ): ApiRequestResponse = withContext(Dispatchers.IO) {
+        try {
+            val apiResponse = GitHubJavaRepositoriesApi.RETROFIT_GITHUB
+                .getJavaRepositoriesFromGithubApi()
 
-        val apiResponse = GitHubJavaRepositoriesApi
-            .RETROFIT_GITHUB
-            .getJavaRepositoriesFromGithubApi()
-            .execute()
+            if(apiResponse.isSuccessful){
+                val repositories = apiResponse.body()?.items?.toMutableList() ?: mutableListOf()
+                for (repository in repositories) {
+                    val secondApiResponse = GitHubUsersApi
+                        .cargarUrl("${BuildConfig.GITHUB_API_BASE_URL}users/")
+                        .getUserData(repository.owner!!.login!!, BuildConfig.GITHUB_API_TOKEN)
 
-        if(apiResponse.isSuccessful){
-            val repositories = apiResponse.body()!!.items ?: emptyList()
-            for(repository in repositories){
-                val secondApiResponse = GitHubUsersApi
-                    .cargarUrl("https://api.github.com/users/")
-                    .getUserData(repository.owner!!.login!!, BuildConfig.GITHUB_API_TOKEN)
-                    .execute()
-
-                if(secondApiResponse.isSuccessful){
-                    Log.e("secondApiResponse", "${secondApiResponse.body()}")
-                    repository.owner.ownerRealName = secondApiResponse.body()!!.name
-                }else{
-                    val errorBody = secondApiResponse.errorBody()?.string()
-                    Log.e("secondApiResponse", "Error: $errorBody")
+                    if (secondApiResponse.isSuccessful) {
+                        repository.owner.ownerRealName = secondApiResponse.body()?.name
+                    }
                 }
+                return@withContext ApiRequestResponse(true, repositories)
+            }else{
+                return@withContext ApiRequestResponse(false, mutableListOf<GitHubJavaRepository>())
             }
-            deferred.complete(Triple(true, R.string.exito_api, repositories))
-        }else{
-            deferred.complete(Triple(false, R.string.error_api, emptyList()))
+        } catch (e: Exception) {
+            return@withContext ApiRequestResponse(false, mutableListOf<GitHubJavaRepository>()
+            )
         }
-
-        return@withContext deferred.await()
     }
 
-    override suspend fun gettingRepositoryPullRequests(
+    override suspend fun getRepositoryPullRequests(
         fullName: String
-    ): Triple<Boolean, Int, List<RepositoryPullRequest>> = withContext(Dispatchers.IO)  {
-
-        val deferred = CompletableDeferred<Triple<Boolean, Int, List<RepositoryPullRequest>>>()
-        val baseUrl = "${BuildConfig.GITHUB_API_BASE_URL}repos/alibaba/arthas/"
-        //val baseUrl = "https://api.github.com/repos/$fullName/"
-        val apiService = GitHubJavaRepositoryPullRequestApi.create(baseUrl)
-        val request = apiService.getPullRequestsFromRepo().execute()
-
-
-        if(request.isSuccessful){
-            deferred.complete(Triple(true, R.string.exito_api, request.body() ?: emptyList()))
-        }else{
-            deferred.complete(Triple(false, R.string.exito_api, emptyList()))
+    ): ApiRequestResponse = withContext(Dispatchers.IO)  {
+        try{
+            val baseUrl = "${BuildConfig.GITHUB_API_BASE_URL}repos/alibaba/arthas/"
+            //val baseUrl = "https://api.github.com/repos/$fullName/"
+            val apiResponse = GitHubJavaRepositoryPullRequestApi.create(baseUrl)
+                .getPullRequestsFromRepo()
+            if(apiResponse.isSuccessful){
+                val pullRequests = apiResponse.body()?.toMutableList() ?: mutableListOf()
+                return@withContext ApiRequestResponse(true, pullRequests)
+            }else{
+                return@withContext ApiRequestResponse(false, mutableListOf<RepositoryPullRequest>())
+            }
+        }catch(e:Exception){
+            return@withContext ApiRequestResponse(false, mutableListOf<RepositoryPullRequest>())
         }
-
-        return@withContext deferred.await()
     }
 }

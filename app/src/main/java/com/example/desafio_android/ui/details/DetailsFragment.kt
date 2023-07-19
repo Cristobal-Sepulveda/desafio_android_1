@@ -8,12 +8,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.desafio_android.R
 import com.example.desafio_android.data.dto.ParcelableGitHubJavaRepository
 import com.example.desafio_android.data.dto.RepositoryPullRequest
 import com.example.desafio_android.databinding.FragmentDetailsBinding
+import com.example.desafio_android.utils.Constants
 import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -56,6 +58,12 @@ class DetailsFragment: Fragment() {
 
         _viewModel.pullRequestClosed.observe(viewLifecycleOwner){
             _binding!!.detailsTextViewClosed.text = "$it closed"
+        }
+
+        _viewModel.status.observe(viewLifecycleOwner){ status ->
+            if(status == Constants.CloudRequestStatus.ERROR){
+                Toast.makeText(requireContext(), "Error", Toast.LENGTH_LONG).show()
+            }
         }
 
         getScreenData(bundle)

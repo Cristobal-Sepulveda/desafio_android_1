@@ -19,7 +19,7 @@ data class RepositoryPullRequest(
     val closed_at: String?,
     val merged_at: String?,
     val merge_commit_sha: String?,
-    val assignee: User??,
+    val assignee: User?,
     val assignees: List<User>?,
     val requested_reviewers: List<User>?,
     val requested_teams: List<Team>?,
