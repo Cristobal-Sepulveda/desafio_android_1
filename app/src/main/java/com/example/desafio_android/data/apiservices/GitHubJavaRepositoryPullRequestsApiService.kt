@@ -1,6 +1,6 @@
 package com.example.desafio_android.data.apiservices
 
-import com.example.desafio_android.data.dto.GitHubJavaRepositoryPullRequests
+import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepositoryPullRequests
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

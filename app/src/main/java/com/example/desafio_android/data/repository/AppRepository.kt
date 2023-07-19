@@ -1,13 +1,13 @@
-package com.example.desafio_android.data
+package com.example.desafio_android.data.repository
 
 import android.util.Log
 import com.example.desafio_android.BuildConfig
 import com.example.desafio_android.data.apiservices.GitHubJavaRepositoriesApi
 import com.example.desafio_android.data.apiservices.GitHubJavaRepositoryPullRequestApi
 import com.example.desafio_android.data.apiservices.GitHubUsersApi
-import com.example.desafio_android.data.dto.GitHubJavaRepository
-import com.example.desafio_android.data.dto.GitHubJavaRepositoryPullRequests
-import com.example.desafio_android.utils.ApiRequestResponse
+import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepository
+import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepositoryPullRequests
+import com.example.desafio_android.data.dataclasses.returns.ApiRequestResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

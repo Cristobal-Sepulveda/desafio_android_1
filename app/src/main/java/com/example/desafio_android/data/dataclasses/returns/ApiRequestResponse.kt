@@ -1,4 +1,4 @@
-package com.example.desafio_android.utils
+package com.example.desafio_android.data.dataclasses.returns
 
 data class ApiRequestResponse(
     val wasSuccess: Boolean,

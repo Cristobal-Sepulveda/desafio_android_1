@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.desafio_android.data.dto.GitHubJavaRepository
+import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepository
 import com.example.desafio_android.databinding.FragmentHomeBinding
 import com.example.desafio_android.utils.asParcelable
 import org.koin.androidx.viewmodel.ext.android.viewModel

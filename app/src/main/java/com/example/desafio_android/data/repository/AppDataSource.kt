@@ -1,6 +1,6 @@
-package com.example.desafio_android.data
+package com.example.desafio_android.data.repository
 
-import com.example.desafio_android.utils.ApiRequestResponse
+import com.example.desafio_android.data.dataclasses.returns.ApiRequestResponse
 
 interface AppDataSource {
     suspend fun getJavaRepositories(pageToRequest: Int): ApiRequestResponse

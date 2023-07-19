@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.desafio_android.data.AppDataSource
-import com.example.desafio_android.data.dto.GitHubJavaRepositoryPullRequests
+import com.example.desafio_android.data.repository.AppDataSource
+import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepositoryPullRequests
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
@@ -13,23 +13,24 @@ class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
     private val _dataLoading = MutableLiveData<Boolean?>()
     val dataLoading: LiveData<Boolean?> = _dataLoading
 
-    private val _listInScreen = MutableLiveData<List<*>?>()
-    val listInScreen: LiveData<List<*>?> = _listInScreen
+    private val _listToDisplay = MutableLiveData<MutableList<*>?>()
+    val listToDisplay: LiveData<MutableList<*>?> = _listToDisplay
 
     private val _pullRequestsOpenedAndClosed = MutableLiveData<Pair<Int,Int>>()
     val pullRequestsOpenedAndClosed: LiveData<Pair<Int,Int>> = _pullRequestsOpenedAndClosed
 
     var fullName = ""
 
-    fun refresh() = gettingRepositoryPullRequests(fullName)
+    fun refresh() = gettingRepositoryPullRequests()
 
-    fun gettingRepositoryPullRequests(fullName: String){
+    fun gettingRepositoryPullRequests(){
         viewModelScope.launch{
             var opened = 0
             var closed = 0
             _dataLoading.postValue(true)
             val apiRequestResponse = appDataSource.getRepositoryPullRequests(fullName)
-            _listInScreen.postValue(apiRequestResponse.dataObtained)
+            _listToDisplay.postValue(apiRequestResponse.dataObtained)
+
             _dataLoading.postValue(when(apiRequestResponse.wasSuccess){
                 true -> {
                     apiRequestResponse.dataObtained.forEach {

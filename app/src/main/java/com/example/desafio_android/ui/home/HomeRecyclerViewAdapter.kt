@@ -1,14 +1,11 @@
 package com.example.desafio_android.ui.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.desafio_android.R
-import com.example.desafio_android.data.dto.GitHubJavaRepository
+import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepository
 import com.example.desafio_android.databinding.ItemGithubRepositoryBinding
 
 

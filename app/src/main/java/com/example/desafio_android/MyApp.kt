@@ -1,8 +1,8 @@
 package com.example.desafio_android
 
 import android.app.Application
-import com.example.desafio_android.data.AppDataSource
-import com.example.desafio_android.data.AppRepository
+import com.example.desafio_android.data.repository.AppDataSource
+import com.example.desafio_android.data.repository.AppRepository
 import com.example.desafio_android.ui.details.DetailsViewModel
 import com.example.desafio_android.ui.home.HomeViewModel
 import org.koin.dsl.module

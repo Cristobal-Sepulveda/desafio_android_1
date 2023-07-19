@@ -7,7 +7,7 @@
     <data>
         <variable
             name ="pullRequestItem"
-            type ="com.example.desafio_android.data.dto.GitHubJavaRepositoryPullRequests"/>
+            type ="com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepositoryPullRequests"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

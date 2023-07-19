@@ -1,6 +1,6 @@
 package com.example.desafio_android.data.apiservices
 
-import com.example.desafio_android.data.dto.GitHubJavaRepositories
+import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepositories
 import com.example.desafio_android.utils.Constants.apiUrl
 import retrofit2.Response
 import retrofit2.Retrofit

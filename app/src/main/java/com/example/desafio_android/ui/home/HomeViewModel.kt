@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.desafio_android.data.AppDataSource
-import com.example.desafio_android.data.dto.GitHubJavaRepository
-import com.example.desafio_android.utils.Constants.CloudRequestStatus
-import kotlinx.coroutines.Dispatchers
+import com.example.desafio_android.data.repository.AppDataSource
+import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepository
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {

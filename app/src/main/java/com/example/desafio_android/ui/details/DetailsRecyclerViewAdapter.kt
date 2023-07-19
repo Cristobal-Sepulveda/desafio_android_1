@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.desafio_android.data.dto.GitHubJavaRepositoryPullRequests
+import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepositoryPullRequests
 import com.example.desafio_android.databinding.ItemPullRequestBinding
 
 
@@ -44,12 +44,14 @@ class DetailsRecyclerViewAdapter(
 
     object DiffCallBack: DiffUtil.ItemCallback<GitHubJavaRepositoryPullRequests>(){
         override fun areItemsTheSame(oldItem: GitHubJavaRepositoryPullRequests,
-                                     newItem: GitHubJavaRepositoryPullRequests): Boolean {
+                                     newItem: GitHubJavaRepositoryPullRequests
+        ): Boolean {
             return oldItem === newItem
         }
 
         override fun areContentsTheSame(oldItem: GitHubJavaRepositoryPullRequests,
-                                        newItem: GitHubJavaRepositoryPullRequests): Boolean {
+                                        newItem: GitHubJavaRepositoryPullRequests
+        ): Boolean {
             return oldItem.id == newItem.id
         }
     }

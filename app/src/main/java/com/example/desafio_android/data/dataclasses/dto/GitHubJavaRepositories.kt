@@ -1,6 +1,7 @@
-package com.example.desafio_android.data.dto
+package com.example.desafio_android.data.dataclasses.dto
 
 import android.os.Parcelable
+import com.google.gson.Gson
 import kotlinx.parcelize.Parcelize
 
 data class GitHubJavaRepositories(
@@ -24,6 +25,18 @@ data class GitHubJavaRepositoryOwner(
     val login: String,
 )
 
+fun GitHubJavaRepository.asParcelable(): ParcelableGitHubJavaRepository {
+    return ParcelableGitHubJavaRepository(
+        id = id,
+        name = name,
+        full_name = full_name,
+        owner = Gson().toJson(owner),
+        description = description,
+        stargazers_count = stargazers_count,
+        forks_count = forks_count,
+    )
+}
+
 @Parcelize
 data class ParcelableGitHubJavaRepository(
     val id: Long,
@@ -34,3 +47,4 @@ data class ParcelableGitHubJavaRepository(
     val stargazers_count: Long,
     val forks_count: Long,
 ): Parcelable
+
