@@ -1,6 +1,6 @@
 package com.example.desafio_android.data.apiservices
 
-import com.example.desafio_android.data.dataclasses.dto.GitHubUser
+import com.example.desafio_android.data.dataclasses.dto.GHUserDTO
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,7 +13,7 @@ interface GitHubUsersApiService {
     suspend fun getUserData(
         @Path("loginName") loginName: String,
         @Header("Authorization") token: String
-    ): Response<GitHubUser>
+    ): Response<GHUserDTO>
 }
 
 

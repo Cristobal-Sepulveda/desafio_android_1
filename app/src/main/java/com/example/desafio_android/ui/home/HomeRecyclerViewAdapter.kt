@@ -5,18 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepository
+import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryDTO
 import com.example.desafio_android.databinding.ItemGithubRepositoryBinding
 
 
 class HomeRecyclerViewAdapter(private val _viewModel: HomeViewModel
-) : ListAdapter<GitHubJavaRepository, HomeRecyclerViewAdapter.HomeRecyclerViewViewHolder>(
+) : ListAdapter<GHJavaRepositoryDTO, HomeRecyclerViewAdapter.HomeRecyclerViewViewHolder>(
     DiffCallBack) {
 
     class HomeRecyclerViewViewHolder(private var binding: ItemGithubRepositoryBinding):
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(gitHubJavaRepository: GitHubJavaRepository) {
-            binding.gitHubJavaRepositoryItem = gitHubJavaRepository
+        fun bind(GHJavaRepositoryDTO: GHJavaRepositoryDTO) {
+            binding.gitHubJavaRepositoryItem = GHJavaRepositoryDTO
             binding.executePendingBindings()
         }
     }
@@ -37,12 +37,12 @@ class HomeRecyclerViewAdapter(private val _viewModel: HomeViewModel
         )
     }
 
-    object DiffCallBack: DiffUtil.ItemCallback<GitHubJavaRepository>(){
-        override fun areItemsTheSame(oldItem: GitHubJavaRepository, newItem: GitHubJavaRepository): Boolean {
+    object DiffCallBack: DiffUtil.ItemCallback<GHJavaRepositoryDTO>(){
+        override fun areItemsTheSame(oldItem: GHJavaRepositoryDTO, newItem: GHJavaRepositoryDTO): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: GitHubJavaRepository, newItem: GitHubJavaRepository): Boolean {
+        override fun areContentsTheSame(oldItem: GHJavaRepositoryDTO, newItem: GHJavaRepositoryDTO): Boolean {
             return oldItem.id == newItem.id
         }
     }

@@ -4,8 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
+import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryPullRequestDO
 import com.example.desafio_android.data.repository.AppDataSource
-import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepositoryPullRequests
+import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryPullRequestDTO
+import com.example.desafio_android.data.dataclasses.dto.asDomainModel
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
@@ -13,8 +16,8 @@ class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
     private val _dataLoading = MutableLiveData<Boolean?>()
     val dataLoading: LiveData<Boolean?> = _dataLoading
 
-    private val _listToDisplay = MutableLiveData<MutableList<*>?>()
-    val listToDisplay: LiveData<MutableList<*>?> = _listToDisplay
+    private val _listToDisplay = MutableLiveData<MutableList<GHJavaRepositoryPullRequestDO>>()
+    val listToDisplay: LiveData<MutableList<GHJavaRepositoryPullRequestDO>> = _listToDisplay
 
     private val _pullRequestsOpenedAndClosed = MutableLiveData<Pair<Int,Int>>()
     val pullRequestsOpenedAndClosed: LiveData<Pair<Int,Int>> = _pullRequestsOpenedAndClosed
@@ -29,19 +32,22 @@ class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
             var closed = 0
             _dataLoading.postValue(true)
             val apiRequestResponse = appDataSource.getRepositoryPullRequests(fullName)
-            _listToDisplay.postValue(apiRequestResponse.dataObtained)
+            val dataObtained = apiRequestResponse.dataObtained
+            _listToDisplay.postValue(dataObtained.toMutableList())
 
             _dataLoading.postValue(when(apiRequestResponse.wasSuccess){
                 true -> {
-                    apiRequestResponse.dataObtained.forEach {
-                        val gitHubJavaRepositoryPullRequests = it as GitHubJavaRepositoryPullRequests
-                        if(gitHubJavaRepositoryPullRequests.state=="open") opened++ else closed++
+                    dataObtained.forEach {
+                        val gHJavaRepositoryPullRequestDTO = it as GHJavaRepositoryPullRequestDTO
+                        if(gHJavaRepositoryPullRequestDTO.state=="open") opened++ else closed++
                     }
                     false
                 }
                 false -> null
             })
+
             _pullRequestsOpenedAndClosed.postValue(Pair(opened, closed))
         }
     }
+
 }

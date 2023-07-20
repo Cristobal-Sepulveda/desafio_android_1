@@ -10,7 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.desafio_android.R
-import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepositoryPullRequests
+import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryPullRequestDO
+import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryPullRequestDTO
 import com.example.desafio_android.databinding.FragmentDetailsBinding
 import com.google.android.material.appbar.MaterialToolbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -44,7 +45,7 @@ class DetailsFragment: Fragment() {
 
 
         _viewModel.listToDisplay.observe(viewLifecycleOwner) {
-            it.let { adapter.submitList(it as MutableList<GitHubJavaRepositoryPullRequests>) }
+            it.let { adapter.submitList(it) }
         }
 
         _viewModel.pullRequestsOpenedAndClosed.observe(viewLifecycleOwner){
@@ -59,7 +60,7 @@ class DetailsFragment: Fragment() {
         return _binding!!.root
     }
 
-    private fun openPullRequestInChrome(it: GitHubJavaRepositoryPullRequests) {
+    private fun openPullRequestInChrome(it: GHJavaRepositoryPullRequestDO) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.apply {
             data = Uri.parse(it.html_url)

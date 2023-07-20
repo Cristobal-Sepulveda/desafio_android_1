@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepository
+import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryDTO
 import com.example.desafio_android.databinding.FragmentHomeBinding
 import com.example.desafio_android.utils.asParcelable
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -49,7 +49,7 @@ class HomeFragment: Fragment() {
         _viewModel.getJavaRepositories()
 
         _viewModel.listToDisplay.observe(viewLifecycleOwner) {
-            adapter.submitList(it as MutableList<GitHubJavaRepository>)
+            adapter.submitList(it as List<GHJavaRepositoryDTO>)
         }
 
         _viewModel.shouldINavigate.observe(viewLifecycleOwner) { gitHubJavaRepository ->

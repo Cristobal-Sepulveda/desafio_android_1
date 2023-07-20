@@ -1,6 +1,6 @@
 package com.example.desafio_android.data.apiservices
 
-import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepositories
+import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepositoriesDTO
 import com.example.desafio_android.utils.Constants.apiUrl
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -10,7 +10,7 @@ import retrofit2.http.GET
 interface GitHubJavaRepositoriesApiService {
 
     @GET("search/repositories?q=language:Java&sort=stars&page=1")
-    suspend fun getJavaRepositoriesFromGithubApi(): Response<GitHubJavaRepositories>
+    suspend fun getJavaRepositoriesFromGithubApi(): Response<GitHubJavaRepositoriesDTO>
 
 }
 

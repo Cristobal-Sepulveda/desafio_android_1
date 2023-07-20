@@ -7,7 +7,7 @@
     <data>
         <variable
             name ="pullRequestItem"
-            type ="com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepositoryPullRequests"/>
+            type ="com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryPullRequestDO"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,7 +48,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/itemPullRequest_textView_description"
             android:layout_marginTop="@dimen/space_small"
-            app:imageUrl="@{pullRequestItem.user.avatar_url}"
+            app:imageUrl="@{pullRequestItem.userDO.avatar_url}"
             tools:background="@color/black"
             />
 
@@ -59,7 +59,7 @@
             app:layout_constraintStart_toEndOf="@+id/itemPullRequestCircleImageViewFotoPerfil"
             app:layout_constraintTop_toTopOf="@+id/itemPullRequestCircleImageViewFotoPerfil"
             android:layout_marginStart="@dimen/space_small"
-            android:text="@{pullRequestItem.user.login}"
+            android:text="@{pullRequestItem.userDO.login}"
             android:textColor="@color/nombreGitHubJavaRepository"
             android:textStyle="bold"
             android:textSize="@dimen/text_medium"
@@ -73,7 +73,7 @@
             app:layout_constraintStart_toEndOf="@+id/itemPullRequestCircleImageViewFotoPerfil"
             app:layout_constraintTop_toBottomOf="@+id/itemPullRequestTextViewUserProfileName"
             android:layout_marginStart="@dimen/space_small"
-            android:text="@{pullRequestItem.user.login}"
+            android:text="@{pullRequestItem.userDO.login}"
             android:textSize="@dimen/text_medium"
             tools:text="username"
             />
