@@ -9,7 +9,7 @@ data class GHJavaRepositoryPullRequestDTO(
     val id: Int,
     val title: String,
     val body: String,
-    val userDTO: UserDTO,
+    val user: UserDTO,
     val html_url: String,
     val state: String,
 )
@@ -28,7 +28,7 @@ fun GHJavaRepositoryPullRequestDTO.asDomainModel(
         id = ghJavaRepositoryPullRequestDTO.id,
         title = ghJavaRepositoryPullRequestDTO.title,
         body = ghJavaRepositoryPullRequestDTO.body,
-        userDO = ghJavaRepositoryPullRequestDTO.userDTO.asDomainModel(ghJavaRepositoryPullRequestDTO.userDTO),
+        user = ghJavaRepositoryPullRequestDTO.user.asDomainModel(ghJavaRepositoryPullRequestDTO.user),
         html_url = ghJavaRepositoryPullRequestDTO.html_url,
         state = ghJavaRepositoryPullRequestDTO.state
     )

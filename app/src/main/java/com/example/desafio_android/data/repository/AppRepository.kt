@@ -5,6 +5,8 @@ import com.example.desafio_android.BuildConfig
 import com.example.desafio_android.data.apiservices.GitHubJavaRepositoriesApi
 import com.example.desafio_android.data.apiservices.GitHubJavaRepositoryPullRequestApi
 import com.example.desafio_android.data.apiservices.GitHubUsersApi
+import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
+import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryDTO
 import com.example.desafio_android.data.dataclasses.dto.asDomainModel
 import com.example.desafio_android.data.dataclasses.returns.ApiPullRequestResponse
 import com.example.desafio_android.data.dataclasses.returns.ApiRepositoriesResponse
@@ -35,11 +37,7 @@ class AppRepository(): AppDataSource {
                         Log.e("getJavaRepositories", "Setting Name Error: ${secondApiResponse.errorBody()}")
                     }
                 }
-                val repositoriesToDO = repositories.map{
-                    it.asDomainModel(it)
-                }
-
-                return@withContext ApiRepositoriesResponse(true, repositoriesToDO)
+                return@withContext ApiRepositoriesResponse(true, repositories)
             }else{
                 return@withContext ApiRepositoriesResponse(false, emptyList())
             }
@@ -63,10 +61,7 @@ class AppRepository(): AppDataSource {
 
             if(apiResponse.isSuccessful){
                 val pullRequests = apiResponse.body() ?: emptyList()
-                val pullRequestsToDO = pullRequests.map{
-                    it.asDomainModel(it)
-                }
-                return@withContext ApiPullRequestResponse(true, pullRequestsToDO)
+                return@withContext ApiPullRequestResponse(true, pullRequests)
             }else{
                 return@withContext ApiPullRequestResponse(false, emptyList())
             }

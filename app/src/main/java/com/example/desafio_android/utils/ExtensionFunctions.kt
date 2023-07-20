@@ -1,10 +1,11 @@
 package com.example.desafio_android.utils
 
+import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
 import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryDTO
 import com.example.desafio_android.data.dataclasses.parcelables.ParcelableGHJavaRepository
 import com.google.gson.Gson
 
-fun GHJavaRepositoryDTO.asParcelable(): ParcelableGHJavaRepository {
+fun GHJavaRepositoryDO.asParcelable(): ParcelableGHJavaRepository {
     return ParcelableGHJavaRepository(
         id = id,
         name = name,

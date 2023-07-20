@@ -1,5 +1,6 @@
 package com.example.desafio_android.ui.details
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -33,7 +34,12 @@ class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
             _dataLoading.postValue(true)
             val apiRequestResponse = appDataSource.getRepositoryPullRequests(fullName)
             val dataObtained = apiRequestResponse.dataObtained
-            _listToDisplay.postValue(dataObtained.toMutableList())
+            var aux = 0
+            val dataObtainedToDO = dataObtained.map{
+                Log.e("asd", it.toString())
+                it.asDomainModel(it)
+            }
+            _listToDisplay.postValue(dataObtainedToDO.toMutableList())
 
             _dataLoading.postValue(when(apiRequestResponse.wasSuccess){
                 true -> {

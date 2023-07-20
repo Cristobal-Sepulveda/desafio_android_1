@@ -45,7 +45,7 @@ fun GHJavaRepositoryOwnerDTO.asDomainModel(
         id = gHJavaRepositoryOwnerDTO.id,
         login = gHJavaRepositoryOwnerDTO.login,
         avatar_url = gHJavaRepositoryOwnerDTO.avatar_url,
-        name = gHJavaRepositoryOwnerDTO.name
+        name = gHJavaRepositoryOwnerDTO.name?:""
     )
 
 }

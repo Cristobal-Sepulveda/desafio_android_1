@@ -49,7 +49,7 @@ class HomeFragment: Fragment() {
         _viewModel.getJavaRepositories()
 
         _viewModel.listToDisplay.observe(viewLifecycleOwner) {
-            adapter.submitList(it as List<GHJavaRepositoryDTO>)
+            adapter.submitList(it)
         }
 
         _viewModel.shouldINavigate.observe(viewLifecycleOwner) { gitHubJavaRepository ->
