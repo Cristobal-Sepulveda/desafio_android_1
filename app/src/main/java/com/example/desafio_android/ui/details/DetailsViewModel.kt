@@ -34,9 +34,7 @@ class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
             _dataLoading.postValue(true)
             val apiRequestResponse = appDataSource.getRepositoryPullRequests(fullName)
             val dataObtained = apiRequestResponse.dataObtained
-            var aux = 0
             val dataObtainedToDO = dataObtained.map{
-                Log.e("asd", it.toString())
                 it.asDomainModel(it)
             }
             _listToDisplay.postValue(dataObtainedToDO.toMutableList())

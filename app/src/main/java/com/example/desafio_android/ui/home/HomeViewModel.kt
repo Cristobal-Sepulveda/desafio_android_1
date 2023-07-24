@@ -5,10 +5,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
 import com.example.desafio_android.data.repository.AppDataSource
 import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryDTO
 import com.example.desafio_android.data.dataclasses.dto.asDomainModel
+import com.example.desafio_android.data.paging.ExamplePagingSource
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
@@ -23,6 +27,12 @@ class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
 
     private val _navigateToSelectedGHJavaRepositoryDTO = MutableLiveData<GHJavaRepositoryDO?>()
     val shouldINavigate: LiveData<GHJavaRepositoryDO?> = _navigateToSelectedGHJavaRepositoryDTO
+
+/*    val flow = Pager(
+        // Configure how data is loaded by passing additional properties to
+        // PagingConfig, such as prefetchDistance.
+        PagingConfig(pageSize = 20)
+    ) { ExamplePagingSource(appDataSource, query) }.flow.cachedIn(viewModelScope)*/
 
     fun refresh() = getJavaRepositories()
 
