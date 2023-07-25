@@ -8,12 +8,20 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import com.bumptech.glide.Glide
 import com.example.desafio_android.R
+import com.google.android.material.progressindicator.CircularProgressIndicator
 
 
 @BindingAdapter("apiRequestErrorImage")
 fun bindApiRequestErrorImage(imageView: ImageView, status: LiveData<Boolean?>) {
     if(status.value == null){
         imageView.visibility = View.VISIBLE
+    }
+}
+
+@BindingAdapter("apiRequestLoading")
+fun bindApiRequestErrorImage(circularProgressIndicator: CircularProgressIndicator, status: LiveData<Boolean?>) {
+    if(status.value == true){
+        circularProgressIndicator.visibility = View.VISIBLE
     }
 }
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -12,7 +13,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <!--RecyclerView-->
         <com.example.desafio_android.utils.ScrollChildSwipeRefreshLayout
             android:id="@+id/refresh_layout"
@@ -36,20 +36,42 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-            <ImageView
-                android:id="@+id/imageView_vincularCuentas_error"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/homeScreen_recyclerView_listadoDeRepositories"
-                app:layout_constraintEnd_toEndOf="@id/homeScreen_recyclerView_listadoDeRepositories"
-                app:layout_constraintTop_toTopOf="@id/homeScreen_recyclerView_listadoDeRepositories"
-                app:layout_constraintBottom_toBottomOf="@id/homeScreen_recyclerView_listadoDeRepositories"
-                app:apiRequestErrorImage="@{viewModel.dataLoading}"
-                android:src="@drawable/ic_connection_error_100"
-                android:contentDescription="@string/error_al_intentar_obtener_la_lista_de_usuarios_desde_la_nube" />
-
         </com.example.desafio_android.utils.ScrollChildSwipeRefreshLayout>
 
+        <ImageView
+            android:id="@+id/imageView_vincularCuentas_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/refresh_layout"
+            app:layout_constraintEnd_toEndOf="@id/refresh_layout"
+            app:layout_constraintTop_toTopOf="@id/refresh_layout"
+            app:layout_constraintBottom_toBottomOf="@id/refresh_layout"
+            app:apiRequestErrorImage="@{viewModel.dataLoading}"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            android:src="@drawable/ic_connection_error_100"
+            android:contentDescription="@string/error_al_intentar_obtener_la_lista_de_usuarios_desde_la_nube" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/home_circularProgressIndicator"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintStart_toStartOf="@+id/refresh_layout"
+            app:layout_constraintEnd_toEndOf="@id/refresh_layout"
+            app:layout_constraintTop_toTopOf="@id/refresh_layout"
+            android:indeterminate="true"
+            app:apiRequestLoading="@{viewModel.dataLoading}"
+            app:layout_constraintBottom_toBottomOf="@id/refresh_layout"
+            />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/append_progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="@id/refresh_layout"
+            app:layout_constraintEnd_toEndOf="@id/refresh_layout"
+            app:layout_constraintStart_toStartOf="@id/refresh_layout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -20,8 +20,8 @@ data class GHJavaRepositoryDTO(
 data class GHJavaRepositoryOwnerDTO(
     val id: Long,
     val login: String,
-    val avatar_url: String,
-    var name: String,
+    val avatar_url: String?,
+    var name: String?,
 )
 
 fun GHJavaRepositoryDTO.asDomainModel(
@@ -44,7 +44,7 @@ fun GHJavaRepositoryOwnerDTO.asDomainModel(
     return GHJavaRepositoryOwnerDO(
         id = gHJavaRepositoryOwnerDTO.id,
         login = gHJavaRepositoryOwnerDTO.login,
-        avatar_url = gHJavaRepositoryOwnerDTO.avatar_url,
+        avatar_url = gHJavaRepositoryOwnerDTO.avatar_url?:"",
         name = gHJavaRepositoryOwnerDTO.name?:""
     )
 

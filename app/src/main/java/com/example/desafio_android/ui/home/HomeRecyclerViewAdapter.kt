@@ -2,6 +2,7 @@ package com.example.desafio_android.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.example.desafio_android.databinding.ItemGithubRepositoryBinding
 
 
 class HomeRecyclerViewAdapter(private val _viewModel: HomeViewModel
-) : ListAdapter<GHJavaRepositoryDO, HomeRecyclerViewAdapter.HomeRecyclerViewViewHolder>(
+) : PagingDataAdapter<GHJavaRepositoryDO, HomeRecyclerViewAdapter.HomeRecyclerViewViewHolder>(
     DiffCallBack) {
 
     class HomeRecyclerViewViewHolder(private var binding: ItemGithubRepositoryBinding):
@@ -23,7 +24,7 @@ class HomeRecyclerViewAdapter(private val _viewModel: HomeViewModel
 
     override fun onBindViewHolder(holder: HomeRecyclerViewViewHolder, position: Int) {
         val gitHubJavaRepository = getItem(position)
-        holder.bind(gitHubJavaRepository)
+        holder.bind(gitHubJavaRepository!!)
         holder.itemView.setOnClickListener{
             _viewModel.displayGitHubJavaRepositoryDetails(gitHubJavaRepository)
         }

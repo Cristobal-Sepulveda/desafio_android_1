@@ -9,7 +9,7 @@ data class GHJavaRepositoryDO(
     val name: String,
     val full_name: String,
     val owner: GHJavaRepositoryOwnerDO,
-    val description: String,
+    val description: String?,
     val stargazers_count: Long,
     val forks_count: Long,
 )

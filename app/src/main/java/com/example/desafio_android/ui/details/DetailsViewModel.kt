@@ -42,7 +42,7 @@ class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
             _dataLoading.postValue(when(apiRequestResponse.wasSuccess){
                 true -> {
                     dataObtained.forEach {
-                        val gHJavaRepositoryPullRequestDTO = it as GHJavaRepositoryPullRequestDTO
+                        val gHJavaRepositoryPullRequestDTO = it
                         if(gHJavaRepositoryPullRequestDTO.state=="open") opened++ else closed++
                     }
                     false

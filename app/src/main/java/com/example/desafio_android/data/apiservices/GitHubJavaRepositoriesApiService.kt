@@ -6,11 +6,15 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface GitHubJavaRepositoriesApiService {
 
-    @GET("search/repositories?q=language:Java&sort=stars&page=1")
-    suspend fun getJavaRepositoriesFromGithubApi(): Response<GitHubJavaRepositoriesDTO>
+    @GET("search/repositories?q=language:Java&sort=stars")
+    suspend fun getJavaRepositoriesFromGithubApi(
+        @Query("page") loginName: String,
+    ): Response<GitHubJavaRepositoriesDTO>
 
 }
 
@@ -24,3 +28,4 @@ object GitHubJavaRepositoriesApi{
         retrofitGitHub.create(GitHubJavaRepositoriesApiService::class.java)
     }
 }
+

@@ -7,49 +7,48 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
 import com.example.desafio_android.data.repository.AppDataSource
-import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryDTO
-import com.example.desafio_android.data.dataclasses.dto.asDomainModel
-import com.example.desafio_android.data.paging.ExamplePagingSource
+import com.example.desafio_android.data.paging.ArticlePagingSource
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
 
-    private val _dataLoading = MutableLiveData<Boolean>()
-    val dataLoading: LiveData<Boolean> = _dataLoading
+    private val _dataLoading = MutableLiveData<Boolean?>(false)
+    val dataLoading: LiveData<Boolean?> = _dataLoading
 
-    private val _listToDisplay = MutableLiveData<MutableList<GHJavaRepositoryDO>>()
-    val listToDisplay: LiveData<MutableList<GHJavaRepositoryDO>> = _listToDisplay
-
-    private val displayedPages = 0
+    private val _listToDisplay = MutableLiveData<PagingData<GHJavaRepositoryDO>>()
+    val listToDisplay: LiveData<PagingData<GHJavaRepositoryDO>> = _listToDisplay
 
     private val _navigateToSelectedGHJavaRepositoryDTO = MutableLiveData<GHJavaRepositoryDO?>()
     val shouldINavigate: LiveData<GHJavaRepositoryDO?> = _navigateToSelectedGHJavaRepositoryDTO
 
-/*    val flow = Pager(
-        // Configure how data is loaded by passing additional properties to
-        // PagingConfig, such as prefetchDistance.
-        PagingConfig(pageSize = 20)
-    ) { ExamplePagingSource(appDataSource, query) }.flow.cachedIn(viewModelScope)*/
+    private val articlePagingSource = ArticlePagingSource()
+    private val pagingConfig = PagingConfig(
+        pageSize = 30,
+        enablePlaceholders = false,
+        initialLoadSize = 30
+    )
+    var isFirstLoadingDone = false
 
-    fun refresh() = getJavaRepositories()
+    fun refresh(){
+        _dataLoading.value = true
+        getJavaRepositories()
+        _dataLoading.value = false
+    }
 
     fun getJavaRepositories(){
-        viewModelScope.launch{
-            _dataLoading.postValue(true)
-            val apiRequestResponse = appDataSource.getJavaRepositories(displayedPages)
-            val dataObtained = apiRequestResponse.dataObtained
-            val dataObtainedToDO = dataObtained.map{
-                it.asDomainModel(it)
+        Log.e("debugggg", "getJavaRepositories")
+        viewModelScope.launch {
+            Pager(pagingConfig) {
+                articlePagingSource
+            }.flow
+                .collect { pagingData ->
+                _dataLoading.postValue(false)
+                _listToDisplay.value = pagingData
             }
-
-            _listToDisplay.postValue(dataObtainedToDO.toMutableList())
-            _dataLoading.postValue(when(apiRequestResponse.wasSuccess){
-                true -> false
-                false -> null
-            })
         }
     }
 

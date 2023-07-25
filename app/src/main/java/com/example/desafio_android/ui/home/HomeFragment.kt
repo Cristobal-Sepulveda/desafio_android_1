@@ -5,19 +5,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryDTO
+import androidx.paging.LoadState
 import com.example.desafio_android.databinding.FragmentHomeBinding
 import com.example.desafio_android.utils.asParcelable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment: Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val _viewModel: HomeViewModel by viewModel()
-
     private lateinit var adapter: HomeRecyclerViewAdapter
 
     override fun onCreateView(
@@ -31,25 +34,10 @@ class HomeFragment: Fragment() {
         _binding!!.lifecycleOwner = viewLifecycleOwner
         _binding!!.homeScreenRecyclerViewListadoDeRepositories.adapter = adapter
 
-        _binding!!.homeScreenRecyclerViewListadoDeRepositories.addOnScrollListener(
-            object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-                    val totalItemCount = layoutManager.itemCount
-
-                    if (totalItemCount > 0 && lastVisibleItemPosition == totalItemCount - 1) {
-                        Log.e("RecyclerView", "Se llego al final de la lista!")
-                    }
-                }
-            }
-        )
-
-        _viewModel.getJavaRepositories()
-
         _viewModel.listToDisplay.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+            lifecycleScope.launch(Dispatchers.IO){
+                adapter.submitData(it)
+            }
         }
 
         _viewModel.shouldINavigate.observe(viewLifecycleOwner) { gitHubJavaRepository ->
@@ -62,6 +50,24 @@ class HomeFragment: Fragment() {
             }
         }
 
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                adapter.loadStateFlow.collect { loadState ->
+/*                    Log.e("Home Fragment", "charging new data")
+                    Log.e("cantidad de datos ", adapter.itemCount.toString())
+                    for (item in adapter.snapshot().items) {
+                        Log.e("items", "${item}")
+                    }*/
+
+                    _binding!!.appendProgress.isVisible =
+                        loadState.source.append is LoadState.Loading
+                    _binding!!.homeCircularProgressIndicator.isVisible =
+                        loadState.source.refresh is LoadState.Loading && !_viewModel.isFirstLoadingDone
+                }
+            }
+        }
+
+        _viewModel.getJavaRepositories()
 
         return _binding!!.root
     }
