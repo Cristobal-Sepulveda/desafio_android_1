@@ -1,7 +1,6 @@
 package com.example.desafio_android.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,14 +20,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeFragment: Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val _viewModel: HomeViewModel by viewModel()
-    private lateinit var adapter: HomeRecyclerViewAdapter
+    private lateinit var adapter: GHJavaRepositoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        adapter = HomeRecyclerViewAdapter(_viewModel)
+        adapter = GHJavaRepositoryAdapter(_viewModel)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         _binding!!.viewModel = _viewModel
         _binding!!.lifecycleOwner = viewLifecycleOwner

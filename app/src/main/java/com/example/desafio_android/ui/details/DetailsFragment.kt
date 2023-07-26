@@ -8,18 +8,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.desafio_android.R
 import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryPullRequestDO
-import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryPullRequestDTO
 import com.example.desafio_android.databinding.FragmentDetailsBinding
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailsFragment: Fragment() {
     private var _binding: FragmentDetailsBinding? = null
     private val _viewModel: DetailsViewModel by viewModel()
-    private lateinit var adapter: DetailsRecyclerViewAdapter
+    private lateinit var adapter: GHRepositoryPullRequestAdapter
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -37,8 +38,8 @@ class DetailsFragment: Fragment() {
         _binding!!.viewModel = _viewModel
         _binding!!.lifecycleOwner = viewLifecycleOwner
 
-        adapter = DetailsRecyclerViewAdapter(DetailsRecyclerViewAdapter.OnClickListener{
-            openPullRequestInChrome(it)
+        adapter = GHRepositoryPullRequestAdapter(GHRepositoryPullRequestAdapter.OnClickListener{
+            openPullRequestLink(it)
         })
 
         _binding!!.detailsScreenRecyclerViewListOfRepositoryPullRequests.adapter = adapter
@@ -60,16 +61,16 @@ class DetailsFragment: Fragment() {
         return _binding!!.root
     }
 
-    private fun openPullRequestInChrome(it: GHJavaRepositoryPullRequestDO) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.apply {
-            data = Uri.parse(it.html_url)
-            setPackage("com.android.chrome")
-        }
+    private fun openPullRequestLink(it: GHJavaRepositoryPullRequestDO) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.html_url))
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-
+            Toast.makeText(
+                requireContext(),
+                "Error: ${e.message}",
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 }

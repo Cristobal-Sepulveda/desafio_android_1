@@ -1,6 +1,5 @@
 package com.example.desafio_android.ui.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,15 +7,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
 import com.example.desafio_android.data.repository.AppDataSource
 import com.example.desafio_android.data.paging.ArticlePagingSource
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
+class HomeViewModel(): ViewModel() {
 
-    private val _dataLoading = MutableLiveData<Boolean?>(false)
+    private val _dataLoading = MutableLiveData(false)
     val dataLoading: LiveData<Boolean?> = _dataLoading
 
     private val _listToDisplay = MutableLiveData<PagingData<GHJavaRepositoryDO>>()
@@ -26,11 +24,7 @@ class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
     val shouldINavigate: LiveData<GHJavaRepositoryDO?> = _navigateToSelectedGHJavaRepositoryDTO
 
     private val articlePagingSource = ArticlePagingSource()
-    private val pagingConfig = PagingConfig(
-        pageSize = 30,
-        enablePlaceholders = false,
-        initialLoadSize = 30
-    )
+
     var isFirstLoadingDone = false
 
     fun refresh(){
@@ -40,8 +34,12 @@ class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
     }
 
     fun getJavaRepositories(){
-        Log.e("debugggg", "getJavaRepositories")
         viewModelScope.launch {
+            val pagingConfig = PagingConfig(
+                pageSize = 30,
+                enablePlaceholders = false,
+                initialLoadSize = 30
+            )
             Pager(pagingConfig) {
                 articlePagingSource
             }.flow
@@ -52,8 +50,8 @@ class HomeViewModel(private val appDataSource: AppDataSource): ViewModel() {
         }
     }
 
-    fun displayGitHubJavaRepositoryDetails(GHJavaRepositoryDO: GHJavaRepositoryDO) {
-        _navigateToSelectedGHJavaRepositoryDTO.value = GHJavaRepositoryDO
+    fun displayGitHubJavaRepositoryDetails(gHJavaRepositoryDO: GHJavaRepositoryDO) {
+        _navigateToSelectedGHJavaRepositoryDTO.value = gHJavaRepositoryDO
     }
 
     fun navigationCompleted() {
