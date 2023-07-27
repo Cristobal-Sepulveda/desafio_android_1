@@ -53,12 +53,6 @@ class HomeFragment: Fragment() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 adapter.loadStateFlow.collect { loadState ->
-/*                    Log.e("Home Fragment", "charging new data")
-                    Log.e("cantidad de datos ", adapter.itemCount.toString())
-                    for (item in adapter.snapshot().items) {
-                        Log.e("items", "${item}")
-                    }*/
-
                     _binding!!.appendProgress.isVisible =
                         loadState.source.append is LoadState.Loading
                     _binding!!.homeCircularProgressIndicator.isVisible =

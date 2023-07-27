@@ -4,9 +4,6 @@ import com.example.desafio_android.data.dataclasses.parcelables.ParcelableGHJava
 import com.example.desafio_android.utils.Identifiable
 import com.google.gson.Gson
 
-data class GHJavaRepositoriesDO(
-    val items: List<GHJavaRepositoryDO>
-)
 
 data class GHJavaRepositoryDO(
     override val id: Long,
