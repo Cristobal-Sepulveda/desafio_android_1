@@ -12,6 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.example.desafio_android.databinding.FragmentHomeBinding
+import com.example.desafio_android.utils.DiffCallBackProvider
 import com.example.desafio_android.utils.asParcelable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +28,7 @@ class HomeFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        adapter = GHJavaRepositoryAdapter(_viewModel)
+        adapter = GHJavaRepositoryAdapter(_viewModel, DiffCallBackProvider())
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         _binding!!.viewModel = _viewModel
         _binding!!.lifecycleOwner = viewLifecycleOwner

@@ -6,7 +6,7 @@ import com.example.desafio_android.data.dataclasses.domainObjects.UserDO
 
 data class GHJavaRepositoryPullRequestDTO(
     val url: String,
-    val id: Int,
+    val id: Long,
     val title: String,
     val body: String,
     val user: UserDTO,

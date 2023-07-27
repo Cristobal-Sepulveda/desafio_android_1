@@ -8,11 +8,12 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
-import com.example.desafio_android.data.repository.AppDataSource
-import com.example.desafio_android.data.paging.ArticlePagingSource
+import com.example.desafio_android.data.paging.GHJavaRepositoriesPagingSource
 import kotlinx.coroutines.launch
 
-class HomeViewModel(): ViewModel() {
+class HomeViewModel(
+    private val gHJavaRepositoriesPagingSource : GHJavaRepositoriesPagingSource
+): ViewModel() {
 
     private val _dataLoading = MutableLiveData(false)
     val dataLoading: LiveData<Boolean?> = _dataLoading
@@ -22,8 +23,6 @@ class HomeViewModel(): ViewModel() {
 
     private val _navigateToSelectedGHJavaRepositoryDTO = MutableLiveData<GHJavaRepositoryDO?>()
     val shouldINavigate: LiveData<GHJavaRepositoryDO?> = _navigateToSelectedGHJavaRepositoryDTO
-
-    private val articlePagingSource = ArticlePagingSource()
 
     var isFirstLoadingDone = false
 
@@ -41,7 +40,7 @@ class HomeViewModel(): ViewModel() {
                 initialLoadSize = 30
             )
             Pager(pagingConfig) {
-                articlePagingSource
+                gHJavaRepositoriesPagingSource
             }.flow
                 .collect { pagingData ->
                 _dataLoading.postValue(false)

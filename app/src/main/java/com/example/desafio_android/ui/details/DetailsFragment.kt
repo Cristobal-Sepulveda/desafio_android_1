@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment
 import com.example.desafio_android.R
 import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryPullRequestDO
 import com.example.desafio_android.databinding.FragmentDetailsBinding
+import com.example.desafio_android.utils.DiffCallBackProvider
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailsFragment: Fragment() {
@@ -38,9 +38,12 @@ class DetailsFragment: Fragment() {
         _binding!!.viewModel = _viewModel
         _binding!!.lifecycleOwner = viewLifecycleOwner
 
-        adapter = GHRepositoryPullRequestAdapter(GHRepositoryPullRequestAdapter.OnClickListener{
-            openPullRequestLink(it)
-        })
+        adapter = GHRepositoryPullRequestAdapter(
+            GHRepositoryPullRequestAdapter.OnClickListener{
+                openPullRequestLink(it)
+            },
+            DiffCallBackProvider()
+        )
 
         _binding!!.detailsScreenRecyclerViewListOfRepositoryPullRequests.adapter = adapter
 

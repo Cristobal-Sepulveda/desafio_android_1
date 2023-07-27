@@ -5,13 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
 import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryPullRequestDO
 import com.example.desafio_android.databinding.ItemPullRequestBinding
+import com.example.desafio_android.utils.DiffCallBackProvider
 
 
 class GHRepositoryPullRequestAdapter(
-    private val onClickListener: OnClickListener
-) : ListAdapter<GHJavaRepositoryPullRequestDO, GHRepositoryPullRequestViewHolder>(DiffCallBack) {
+    private val onClickListener: OnClickListener,
+    diffCallBack: DiffCallBackProvider<GHJavaRepositoryPullRequestDO>
+) : ListAdapter<GHJavaRepositoryPullRequestDO, GHRepositoryPullRequestViewHolder>(diffCallBack) {
 
 
 
@@ -34,22 +37,6 @@ class GHRepositoryPullRequestAdapter(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
-    }
-
-    object DiffCallBack: DiffUtil.ItemCallback<GHJavaRepositoryPullRequestDO>(){
-        override fun areItemsTheSame(
-            oldItem: GHJavaRepositoryPullRequestDO,
-            newItem: GHJavaRepositoryPullRequestDO
-        ): Boolean {
-            return oldItem === newItem
-        }
-
-        override fun areContentsTheSame(
-            oldItem: GHJavaRepositoryPullRequestDO,
-            newItem: GHJavaRepositoryPullRequestDO
-        ): Boolean {
-            return oldItem.id == newItem.id
-        }
     }
 
     class OnClickListener(

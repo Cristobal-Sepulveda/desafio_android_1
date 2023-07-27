@@ -1,52 +1,20 @@
 package com.example.desafio_android.data.repository
 
-import android.util.Log
 import com.example.desafio_android.BuildConfig
-import com.example.desafio_android.data.apiservices.GitHubJavaRepositoriesApi
-import com.example.desafio_android.data.apiservices.GitHubJavaRepositoriesApiService
 import com.example.desafio_android.data.apiservices.GitHubJavaRepositoryPullRequestApi
-import com.example.desafio_android.data.apiservices.GitHubUsersApi
-import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
-import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryDTO
-import com.example.desafio_android.data.dataclasses.dto.asDomainModel
 import com.example.desafio_android.data.dataclasses.returns.ApiPullRequestResponse
-import com.example.desafio_android.data.dataclasses.returns.ApiRepositoriesResponse
-import com.example.desafio_android.data.paging.ArticlePagingSource
+import com.example.desafio_android.data.paging.GHJavaRepositoriesPagingSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class AppRepository(): AppDataSource {
+class AppRepository(
 
-    /*override suspend fun getJavaRepositories(
-        pageToRequest: Int
-    ): ApiRepositoriesResponse = withContext(Dispatchers.IO) {
-        try {
-            val apiResponse = GitHubJavaRepositoriesApi.RETROFIT_GITHUB
-                .getJavaRepositoriesFromGithubApi()
+):AppDataSource{
 
-            if(apiResponse.isSuccessful){
-                val repositories = apiResponse.body()?.items ?: emptyList()
-                for (repository in repositories) {
-                    val loginName = repository.owner.login
+    val gHJavaRepositoriesPagingSource = GHJavaRepositoriesPagingSource(
 
-                    val secondApiResponse = GitHubUsersApi
-                        .cargarUrl("${BuildConfig.GITHUB_API_BASE_URL}users/")
-                        .getUserData(loginName, BuildConfig.GITHUB_API_TOKEN)
+    )
 
-                    if (secondApiResponse.isSuccessful) {
-                        repository.owner.name = secondApiResponse.body()?.name ?: "No data"
-                    }else{
-                        Log.e("getJavaRepositories", "Setting Name Error: ${secondApiResponse.errorBody()}")
-                    }
-                }
-                return@withContext ApiRepositoriesResponse(true, repositories)
-            }else{
-                return@withContext ApiRepositoriesResponse(false, emptyList())
-            }
-        } catch (e: Exception) {
-            return@withContext ApiRepositoriesResponse(false, emptyList())
-        }
-    }*/
 
     override suspend fun getRepositoryPullRequests(
         fullName: String

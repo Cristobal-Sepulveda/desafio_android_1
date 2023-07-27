@@ -12,7 +12,9 @@ import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryPullRequ
 import com.example.desafio_android.data.dataclasses.dto.asDomainModel
 import kotlinx.coroutines.launch
 
-class DetailsViewModel(private val appDataSource: AppDataSource): ViewModel() {
+class DetailsViewModel(
+    private val appDataSource: AppDataSource
+): ViewModel() {
 
     private val _dataLoading = MutableLiveData<Boolean?>()
     val dataLoading: LiveData<Boolean?> = _dataLoading

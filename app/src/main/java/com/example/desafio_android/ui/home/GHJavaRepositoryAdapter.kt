@@ -6,11 +6,13 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
 import com.example.desafio_android.databinding.ItemGithubRepositoryBinding
+import com.example.desafio_android.utils.DiffCallBackProvider
 
 
 class GHJavaRepositoryAdapter(
-    private val _viewModel: HomeViewModel
-) : PagingDataAdapter<GHJavaRepositoryDO, GHJavaRepositoryViewHolder>(DiffCallBack) {
+    private val _viewModel: HomeViewModel,
+    diffCallBack: DiffCallBackProvider<GHJavaRepositoryDO>
+) : PagingDataAdapter<GHJavaRepositoryDO, GHJavaRepositoryViewHolder>(diffCallBack) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GHJavaRepositoryViewHolder {
         return GHJavaRepositoryViewHolder(
@@ -30,7 +32,7 @@ class GHJavaRepositoryAdapter(
         }
     }
 
-    object DiffCallBack: DiffUtil.ItemCallback<GHJavaRepositoryDO>(){
+/*    object DiffCallBack: DiffUtil.ItemCallback<GHJavaRepositoryDO>(){
         override fun areItemsTheSame(oldItem: GHJavaRepositoryDO, newItem: GHJavaRepositoryDO): Boolean {
             return oldItem === newItem
         }
@@ -38,5 +40,5 @@ class GHJavaRepositoryAdapter(
         override fun areContentsTheSame(oldItem: GHJavaRepositoryDO, newItem: GHJavaRepositoryDO): Boolean {
             return oldItem.id == newItem.id
         }
-    }
+    }*/
 }
