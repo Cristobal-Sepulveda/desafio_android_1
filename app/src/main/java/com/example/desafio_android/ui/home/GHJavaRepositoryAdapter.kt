@@ -32,13 +32,4 @@ class GHJavaRepositoryAdapter(
         }
     }
 
-/*    object DiffCallBack: DiffUtil.ItemCallback<GHJavaRepositoryDO>(){
-        override fun areItemsTheSame(oldItem: GHJavaRepositoryDO, newItem: GHJavaRepositoryDO): Boolean {
-            return oldItem === newItem
-        }
-
-        override fun areContentsTheSame(oldItem: GHJavaRepositoryDO, newItem: GHJavaRepositoryDO): Boolean {
-            return oldItem.id == newItem.id
-        }
-    }*/
 }

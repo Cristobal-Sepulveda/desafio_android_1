@@ -11,9 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.example.desafio_android.data.dataclasses.domainObjects.asParcelable
 import com.example.desafio_android.databinding.FragmentHomeBinding
 import com.example.desafio_android.utils.DiffCallBackProvider
-import com.example.desafio_android.utils.asParcelable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
