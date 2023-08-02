@@ -13,5 +13,5 @@ interface AppDataSource {
         page:String
     ): List<GHJavaRepositoryDTO>
 
-    val ghJRsPagingSource: GhJRsPagingSource
+    val ghJRsPagingSource: GhJRsPagingSource?
 }
