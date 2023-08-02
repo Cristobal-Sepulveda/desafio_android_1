@@ -1,4 +1,4 @@
-package com.example.desafio_android.data.repository
+package com.example.desafio_android.data.source.network
 
 import android.util.Log
 import com.example.desafio_android.BuildConfig
@@ -8,38 +8,14 @@ import com.example.desafio_android.data.apiservices.GitHubUsersApi
 import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryDTO
 import com.example.desafio_android.data.dataclasses.returns.ApiPullRequestResponse
 import com.example.desafio_android.data.paging.GhJRsPagingSource
+import com.example.desafio_android.data.source.AppDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class GHApiRepository(
+class NetworkDataSource(
     private val pullRequestApi: GitHubJavaRepositoryPullRequestApi,
     private val repositoriesApi: GitHubJavaRepositoriesApi,
-):AppDataSource{
-
-    override suspend fun getRepositoryPullRequests(
-        fullName: String
-    ): ApiPullRequestResponse = withContext(Dispatchers.IO)  {
-        try{
-            val baseUrl = if(BuildConfig.DEBUG){
-                "${BuildConfig.GITHUB_API_BASE_URL}repos/alibaba/arthas/"
-            }else{
-                "${BuildConfig.GITHUB_API_BASE_URL}repos/$fullName/"
-            }
-
-            val apiResponse = pullRequestApi
-                .create(baseUrl)
-                .getPullRequestsFromRepo()
-
-            if(apiResponse.isSuccessful){
-                val pullRequests = apiResponse.body() ?: emptyList()
-                return@withContext ApiPullRequestResponse(true, pullRequests)
-            }else{
-                return@withContext ApiPullRequestResponse(false, emptyList())
-            }
-        }catch(e:Exception){
-            return@withContext ApiPullRequestResponse(false, emptyList())
-        }
-    }
+): AppDataSource {
 
     override suspend fun getJavaRepositories(
         page: String
@@ -65,6 +41,30 @@ class GHApiRepository(
             throw Exception(apiResponse.message())
         }
         return@withContext repositories
+    }
+    override suspend fun getRepositoryPullRequests(
+        fullName: String
+    ): ApiPullRequestResponse = withContext(Dispatchers.IO)  {
+        try{
+            val baseUrl = if(BuildConfig.DEBUG){
+                "${BuildConfig.GITHUB_API_BASE_URL}repos/alibaba/arthas/"
+            }else{
+                "${BuildConfig.GITHUB_API_BASE_URL}repos/$fullName/"
+            }
+
+            val apiResponse = pullRequestApi
+                .create(baseUrl)
+                .getPullRequestsFromRepo()
+
+            if(apiResponse.isSuccessful){
+                val pullRequests = apiResponse.body() ?: emptyList()
+                return@withContext ApiPullRequestResponse(true, pullRequests)
+            }else{
+                return@withContext ApiPullRequestResponse(false, emptyList())
+            }
+        }catch(e:Exception){
+            return@withContext ApiPullRequestResponse(false, emptyList())
+        }
     }
 
     override val ghJRsPagingSource = GhJRsPagingSource(this)

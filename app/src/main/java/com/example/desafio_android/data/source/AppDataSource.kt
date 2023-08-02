@@ -1,4 +1,4 @@
-package com.example.desafio_android.data.repository
+package com.example.desafio_android.data.source
 
 import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryDTO
 import com.example.desafio_android.data.dataclasses.returns.ApiPullRequestResponse
@@ -13,5 +13,5 @@ interface AppDataSource {
         page:String
     ): List<GHJavaRepositoryDTO>
 
-    val ghJRsPagingSource: GhJRsPagingSource?
+    val ghJRsPagingSource: GhJRsPagingSource
 }

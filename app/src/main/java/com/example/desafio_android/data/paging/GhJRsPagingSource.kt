@@ -4,21 +4,21 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
 import com.example.desafio_android.data.dataclasses.dto.asDomainModel
-import com.example.desafio_android.data.repository.GHApiRepository
+import com.example.desafio_android.data.source.network.NetworkDataSource
 import kotlin.math.max
 
 private const val STARTING_KEY = 0
 private fun ensureValidKey(key: Int) = max(STARTING_KEY, key)
 
 class GhJRsPagingSource(
-    private val repository: GHApiRepository
+    private val networkDataSource: NetworkDataSource
 ) : PagingSource<Int, GHJavaRepositoryDO>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GHJavaRepositoryDO> {
         val start = params.key ?: STARTING_KEY
         val range = start.until(start + params.loadSize)
 
-        val repositories = repository.getJavaRepositories(
+        val repositories = networkDataSource.getJavaRepositories(
             ((start / params.loadSize) + 1).toString()
         )
 

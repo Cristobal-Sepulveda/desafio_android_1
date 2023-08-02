@@ -8,12 +8,12 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
-import com.example.desafio_android.data.paging.GhJRsPagingSource
-import com.example.desafio_android.data.repository.AppDataSource
+import com.example.desafio_android.data.source.AppDataSource
+import com.example.desafio_android.data.source.GhRepository
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val appDataSource: AppDataSource
+    private val ghRepository: GhRepository
 ): ViewModel() {
 
     private val _dataLoading = MutableLiveData(false)
@@ -41,7 +41,7 @@ class HomeViewModel(
                 initialLoadSize = 30
             )
             Pager(pagingConfig) {
-                appDataSource.ghJRsPagingSource
+                ghRepository.ghJRsPagingSource
             }.flow
                 .collect { pagingData ->
                 _dataLoading.postValue(false)

@@ -3,7 +3,6 @@ package com.example.desafio_android.data.source
 import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryDTO
 import com.example.desafio_android.data.dataclasses.returns.ApiPullRequestResponse
 import com.example.desafio_android.data.paging.GhJRsPagingSource
-import com.example.desafio_android.data.repository.AppDataSource
 
 class FakeDataSource(
     private var javaRepositories: List<GHJavaRepositoryDTO> = emptyList(),
