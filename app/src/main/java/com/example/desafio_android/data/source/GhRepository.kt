@@ -10,12 +10,6 @@ class GhRepository(
     private val networkDataSource: NetworkDataSource
 ) {
 
-    suspend fun getJavaRepositories(
-        page: String
-    ): List<GHJavaRepositoryDTO> {
-        return networkDataSource.getJavaRepositories(page)
-    }
-
     suspend fun getRepositoryPullRequests(
         fullName: String
     ): ApiPullRequestResponse {
