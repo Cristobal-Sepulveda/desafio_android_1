@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.desafio_android
+package com.example.desafio_android.utils
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData

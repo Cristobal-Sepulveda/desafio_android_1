@@ -7,17 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.example.desafio_android.data.dataclasses.domainObjects.asParcelable
 import com.example.desafio_android.databinding.FragmentHomeBinding
 import com.example.desafio_android.utils.DiffCallBackProvider
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -45,7 +41,6 @@ class HomeFragment: Fragment() {
                 adapter.submitData(it)
             }
         }
-
         _viewModel.shouldINavigate.observe(viewLifecycleOwner) { gitHubJavaRepository ->
             gitHubJavaRepository?.let {
                 findNavController().navigate(
@@ -58,13 +53,17 @@ class HomeFragment: Fragment() {
 
         lifecycleScope.launch {
             adapter.loadStateFlow.collect { loadState ->
-                Log.e("Loading", adapter.itemCount.toString())
-                _binding!!.appendProgress.isVisible =
-                    loadState.refresh is LoadState.Loading || loadState.append is LoadState.Loading
-
+                if(loadState.refresh is LoadState.Error){
+                    _binding!!.homeScreenTextViewCargando.isVisible = false
+                    _binding!!.homeScreenTextViewError.isVisible = true
+                }
                 if(loadState.refresh is LoadState.NotLoading){
                     _binding!!.homeScreenTextViewCargando.isVisible = false
                 }
+
+                _binding!!.appendProgress.isVisible =
+                    loadState.refresh is LoadState.Loading || loadState.append is LoadState.Loading
+
             }
         }
 

@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryPullRequestDO
-import com.example.desafio_android.data.source.AppDataSource
 import com.example.desafio_android.data.dataclasses.dto.asDomainModel
-import com.example.desafio_android.data.source.GhRepository
+import com.example.desafio_android.data.GhRepository
+import com.example.desafio_android.data.IGhRepository
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(
-    private val ghRepository: GhRepository
+    private val ghRepository: IGhRepository
 ): ViewModel() {
 
     private val _dataLoading = MutableLiveData<Boolean?>()
@@ -31,12 +31,16 @@ class DetailsViewModel(
         viewModelScope.launch{
             var opened = 0
             var closed = 0
+
             _dataLoading.postValue(true)
-            val apiRequestResponse = ghRepository.getRepositoryPullRequests(fullName)
+            ghRepository
+            val apiRequestResponse = ghRepository
+                .getRepositoryPullRequests(fullName)
+
             val dataObtained = apiRequestResponse.dataObtained
-            val dataObtainedToDO = dataObtained.map{
-                it.asDomainModel(it)
-            }
+
+            val dataObtainedToDO = dataObtained.map{ it.asDomainModel(it)}
+
             _listToDisplay.postValue(dataObtainedToDO.toMutableList())
 
             _dataLoading.postValue(when(apiRequestResponse.wasSuccess){

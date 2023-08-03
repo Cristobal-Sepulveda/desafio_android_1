@@ -53,6 +53,7 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             />
+
         <!--RecyclerView-->
         <com.example.desafio_android.utils.ScrollChildSwipeRefreshLayout
             android:id="@+id/refresh_layout"
@@ -90,6 +91,20 @@
                 android:contentDescription="@string/error_al_intentar_obtener_la_lista_de_usuarios_desde_la_nube" />
 
         </com.example.desafio_android.utils.ScrollChildSwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/detailsScreenTextViewNoHayPullRequests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/noHayPullRequests"
+            android:textSize="@dimen/text_bigger"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/refresh_layout"
+            app:layout_constraintEnd_toEndOf="@+id/refresh_layout"
+            app:layout_constraintTop_toTopOf="@+id/refresh_layout"
+            app:layout_constraintBottom_toBottomOf="@+id/refresh_layout"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

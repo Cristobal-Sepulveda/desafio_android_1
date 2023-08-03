@@ -1,5 +1,6 @@
-package com.example.desafio_android.data.apiservices
+package com.example.desafio_android.apiservices
 
+import com.example.desafio_android.BuildConfig
 import com.example.desafio_android.data.dataclasses.dto.GitHubJavaRepositoriesDTO
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -11,16 +12,15 @@ interface GitHubJavaRepositoriesApiService {
 
     @GET("search/repositories?q=language:Java&sort=stars")
     suspend fun getJavaRepositoriesFromGithubApi(
-        @Query("page") loginName: String,
+        @Query("page") page: String,
     ): Response<GitHubJavaRepositoriesDTO>
 
 }
 
 object GitHubJavaRepositoriesApi{
-    private const val apiUrl = "https://api.github.com/"
     private val retrofitGitHub = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(apiUrl)
+        .baseUrl(BuildConfig.GITHUB_API_BASE_URL)
         .build()
 
     val RETROFIT_GITHUB: GitHubJavaRepositoriesApiService by lazy{

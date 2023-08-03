@@ -1,4 +1,4 @@
-package com.example.desafio_android.data.apiservices
+package com.example.desafio_android.apiservices
 
 import com.example.desafio_android.data.dataclasses.dto.GHUserDTO
 import retrofit2.Response

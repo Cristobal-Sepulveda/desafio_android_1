@@ -5,9 +5,7 @@ import com.example.desafio_android.data.dataclasses.returns.ApiPullRequestRespon
 import com.example.desafio_android.data.paging.GhJRsPagingSource
 import com.example.desafio_android.data.source.AppDataSource
 
-class RoomDataSource(
-
-): AppDataSource {
+class RoomDataSource(): AppDataSource {
     override suspend fun getRepositoryPullRequests(
         fullName: String
      ): ApiPullRequestResponse {
@@ -15,11 +13,8 @@ class RoomDataSource(
     }
 
     override suspend fun getJavaRepositories(page: Int): List<GHJavaRepositoryDTO> {
-        TODO("Not yet implemented")
+        return emptyList()
+        //NO-OP
     }
-
-    override val ghJRsPagingSource: GhJRsPagingSource
-        get() = TODO("Not yet implemented")
-
 
 }

@@ -11,5 +11,4 @@ interface AppDataSource {
 
     suspend fun getJavaRepositories(page:Int): List<GHJavaRepositoryDTO>
 
-    val ghJRsPagingSource: PagingSource<Int, GHJavaRepositoryDO>
 }

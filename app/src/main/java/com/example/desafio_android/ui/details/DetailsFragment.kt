@@ -49,7 +49,10 @@ class DetailsFragment: Fragment() {
 
 
         _viewModel.listToDisplay.observe(viewLifecycleOwner) {
-            it.let { adapter.submitList(it) }
+            it.let {
+                if(it.isEmpty()) _binding!!.detailsScreenTextViewNoHayPullRequests.visibility = View.VISIBLE
+                adapter.submitList(it)
+            }
         }
 
         _viewModel.pullRequestsOpenedAndClosed.observe(viewLifecycleOwner){

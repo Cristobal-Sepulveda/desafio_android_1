@@ -1,12 +1,11 @@
 package com.example.desafio_android.data.source.network
 
 import com.example.desafio_android.BuildConfig
-import com.example.desafio_android.data.apiservices.GitHubJavaRepositoriesApi
-import com.example.desafio_android.data.apiservices.GitHubJavaRepositoryPullRequestApi
-import com.example.desafio_android.data.apiservices.GitHubUsersApi
+import com.example.desafio_android.apiservices.GitHubJavaRepositoriesApi
+import com.example.desafio_android.apiservices.GitHubJavaRepositoryPullRequestApi
+import com.example.desafio_android.apiservices.GitHubUsersApi
 import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryDTO
 import com.example.desafio_android.data.dataclasses.returns.ApiPullRequestResponse
-import com.example.desafio_android.data.paging.GhJRsPagingSource
 import com.example.desafio_android.data.source.AppDataSource
 
 class NetworkDataSource(
@@ -14,11 +13,8 @@ class NetworkDataSource(
     private val repositoriesApi: GitHubJavaRepositoriesApi,
 ): AppDataSource {
 
-    override val ghJRsPagingSource = GhJRsPagingSource(this)
-
     override suspend fun getJavaRepositories(page: Int): List<GHJavaRepositoryDTO> {
         val repositories: List<GHJavaRepositoryDTO>
-
         val apiResponse = repositoriesApi
             .RETROFIT_GITHUB
             .getJavaRepositoriesFromGithubApi(page.toString())

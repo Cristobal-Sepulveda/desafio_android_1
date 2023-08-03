@@ -10,4 +10,6 @@
     <string name="cantidad_de_forks">Cantidad de forks\n</string>
     <string name="home_fragment_title">Github JavaPop</string>
     <string name="cargandoRepositorios">Cargando repositorios...</string>
+    <string name="noHayPullRequests">Este repositorio no tiene pull requests</string>
+    <string name="ha_ocurrido_un_error">Ha ocurrido un error. Reinicie la app.</string>
 </resources>

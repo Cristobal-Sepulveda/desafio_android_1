@@ -1,6 +1,5 @@
 package com.example.desafio_android.ui.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,15 +7,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
-import com.example.desafio_android.data.source.AppDataSource
-import com.example.desafio_android.data.source.GhRepository
-import kotlinx.coroutines.flow.Flow
+import com.example.desafio_android.data.GhRepository
+import com.example.desafio_android.data.IGhRepository
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val ghRepository: GhRepository
+    private val ghRepository: IGhRepository
 ): ViewModel() {
 
     private val _dataLoading = MutableLiveData(false)
@@ -42,14 +39,12 @@ class HomeViewModel(
                 prefetchDistance = 1
             )
             Pager(pagingConfig) {
-                ghRepository.ghJRsPagingSource
+                ghRepository.getPagingSource()
             }.flow.collect { pagingData ->
                 _listToDisplay.value = pagingData
             }
         }
     }
-
-
 
     fun displayGitHubJavaRepositoryDetails(gHJavaRepositoryDO: GHJavaRepositoryDO) {
         _navigateToSelectedGHJavaRepositoryDTO.value = gHJavaRepositoryDO

@@ -10,13 +10,11 @@ class FakeRoomDataSource(
     private var pullRequests: ApiPullRequestResponse
 ): AppDataSource {
 
-    override val ghJRsPagingSource: FakePagingSource = FakePagingSource()
-
     override suspend fun getRepositoryPullRequests(fullName: String): ApiPullRequestResponse {
         return pullRequests
     }
 
-    override suspend fun getJavaRepositories(page: String): List<GHJavaRepositoryDTO> {
+    override suspend fun getJavaRepositories(page: Int): List<GHJavaRepositoryDTO> {
         return javaRepositories
     }
 }
