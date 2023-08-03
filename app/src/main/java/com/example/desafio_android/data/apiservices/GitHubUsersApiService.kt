@@ -23,6 +23,7 @@ object GitHubUsersApi {
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(baseUrl)
             .build()
+
         return retrofitGitHub.create(GitHubUsersApiService::class.java)
     }
 }

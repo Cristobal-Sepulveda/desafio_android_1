@@ -9,4 +9,5 @@
     <string name="fab_content_subir">Subir</string>
     <string name="cantidad_de_forks">Cantidad de forks\n</string>
     <string name="home_fragment_title">Github JavaPop</string>
+    <string name="cargandoRepositorios">Cargando repositorios...</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.desafio_android.data.paging
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
@@ -17,10 +18,9 @@ class GhJRsPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GHJavaRepositoryDO> {
         val start = params.key ?: STARTING_KEY
         val range = start.until(start + params.loadSize)
+        val page = (start/params.loadSize)+1
 
-        val repositories = networkDataSource.getJavaRepositories(
-            ((start / params.loadSize) + 1).toString()
-        )
+        val repositories = networkDataSource.getJavaRepositories(page)
 
         return if(repositories.isEmpty()){
             LoadResult.Error(Exception("Error"))
@@ -29,7 +29,7 @@ class GhJRsPagingSource(
                 data = repositories.map { it.asDomainModel(it) },
                 prevKey = when (start) {
                     STARTING_KEY -> null
-                    else -> ensureValidKey(key = range.first - params.loadSize)
+                    else -> ensureValidKey(range.first - params.loadSize)
                 },
                 nextKey = if (repositories.isNotEmpty()) range.last + 1 else null
             )

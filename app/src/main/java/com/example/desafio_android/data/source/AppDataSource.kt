@@ -7,13 +7,9 @@ import com.example.desafio_android.data.dataclasses.returns.ApiPullRequestRespon
 import com.example.desafio_android.data.paging.GhJRsPagingSource
 
 interface AppDataSource {
-    suspend fun getRepositoryPullRequests(
-        fullName: String
-    ): ApiPullRequestResponse
+    suspend fun getRepositoryPullRequests(fullName: String): ApiPullRequestResponse
 
-    suspend fun getJavaRepositories(
-        page:String
-    ): List<GHJavaRepositoryDTO>
+    suspend fun getJavaRepositories(page:Int): List<GHJavaRepositoryDTO>
 
     val ghJRsPagingSource: PagingSource<Int, GHJavaRepositoryDO>
 }

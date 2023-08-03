@@ -14,7 +14,7 @@ class RoomDataSource(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getJavaRepositories(page: String): List<GHJavaRepositoryDTO> {
+    override suspend fun getJavaRepositories(page: Int): List<GHJavaRepositoryDTO> {
         TODO("Not yet implemented")
     }
 
