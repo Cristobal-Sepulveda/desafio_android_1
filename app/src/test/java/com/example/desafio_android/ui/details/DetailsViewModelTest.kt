@@ -48,8 +48,10 @@ class DetailsViewModelTest {
         )
 
         fakeRepository = FakeGhRepository(fakeRoomDataSource, fakeNetworkDataSource)
+
         detailsViewModel = DetailsViewModel(fakeRepository)
 
+        detailsViewModel.gettingRepositoryPullRequests()
     }
 
     @Test
@@ -57,15 +59,20 @@ class DetailsViewModelTest {
         //Given
 
         // When
-        detailsViewModel.gettingRepositoryPullRequests()
 
         val value = detailsViewModel.listToDisplay.getOrAwaitValue()
-        val pullRequestsOpenedAndClosed =
-            detailsViewModel.pullRequestsOpenedAndClosed.getOrAwaitValue()
+
 
         // Then
         assertNotNull(value)
         assertEquals(3, value.size)
+
+    }
+
+    @Test
+    fun test2(){
+        val pullRequestsOpenedAndClosed =
+            detailsViewModel.pullRequestsOpenedAndClosed.getOrAwaitValue()
         assertEquals(3, pullRequestsOpenedAndClosed.first)
         assertEquals(0, pullRequestsOpenedAndClosed.second)
     }

@@ -8,9 +8,11 @@ class GhRepository(
     private val roomDataSource: AppDataSource,
     private val networkDataSource: AppDataSource,
 ) : IGhRepository {
+
     override fun getPagingSource(): GhJRsPagingSource{
         return GhJRsPagingSource(networkDataSource)
     }
+
 
     override suspend fun getRepositoryPullRequests(
         fullName: String

@@ -32,6 +32,7 @@ class HomeFragment: Fragment() {
         _binding!!.lifecycleOwner = viewLifecycleOwner
 
         val adapter = GHJavaRepositoryAdapter(_viewModel, DiffCallBackProvider())
+
         _binding!!.homeScreenRecyclerViewListadoDeRepositories.adapter = adapter
 
         _viewModel.getJavaRepositories()

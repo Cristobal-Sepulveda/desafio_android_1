@@ -3,6 +3,7 @@ package com.example.desafio_android.ui.home
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.desafio_android.data.FakeGhRepository
+import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
 import com.example.desafio_android.data.dataclasses.returns.ApiPullRequestResponse
 import com.example.desafio_android.data.source.local.FakeRoomDataSource
 import com.example.desafio_android.data.source.network.FakeNetworkDataSource
@@ -52,15 +53,21 @@ class HomeViewModelTest{
     }
 
     @Test
-    fun paging_testingIfConfigurationIsOk(){
+    fun paging_testingIfPaging_IsOk(){
         // Given
 
         // When
         homeViewModel.getJavaRepositories()
+
         val value = homeViewModel.listToDisplay.getOrAwaitValue()
+        value.
 
         // Then
         assertNotNull(value)
 
+    }
+
+    @Test
+    fun paging_testingIfPaging_IsError() {
     }
 }

@@ -8,7 +8,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
-import com.example.desafio_android.data.GhRepository
 import com.example.desafio_android.data.IGhRepository
 import kotlinx.coroutines.launch
 
