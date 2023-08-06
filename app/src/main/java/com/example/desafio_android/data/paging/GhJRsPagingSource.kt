@@ -1,13 +1,10 @@
 package com.example.desafio_android.data.paging
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
-import com.example.desafio_android.data.dataclasses.dto.asDomainModel
-import com.example.desafio_android.data.dataclasses.returns.ApiPullRequestResponse
-import com.example.desafio_android.data.source.AppDataSource
-import com.example.desafio_android.data.source.network.NetworkDataSource
+import com.example.desafio_android.domain.GHJavaRepositoryDO
+import com.example.desafio_android.data.datasources.AppDataSource
+import com.example.desafio_android.presentation.mappers.asDomainModel
 import kotlin.math.max
 
 private const val STARTING_KEY = 0
@@ -28,7 +25,7 @@ class GhJRsPagingSource(
             LoadResult.Error(Exception("Error"))
         }else{
             LoadResult.Page(
-                data = repositories.map { it.asDomainModel(it) },
+                data = repositories.map{it.asDomainModel(it)},
                 prevKey = when (start) {
                     STARTING_KEY -> null
                     else -> ensureValidKey(range.first - params.loadSize)

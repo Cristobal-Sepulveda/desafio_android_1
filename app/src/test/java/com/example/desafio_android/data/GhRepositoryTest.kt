@@ -1,8 +1,9 @@
 package com.example.desafio_android.data
 
 import com.example.desafio_android.data.dataclasses.returns.ApiPullRequestResponse
-import com.example.desafio_android.data.source.local.FakeRoomDataSource
-import com.example.desafio_android.data.source.network.FakeNetworkDataSource
+import com.example.desafio_android.data.repositories.GhRepository
+import com.example.desafio_android.data.datasources.localdatasource.FakeRoomDataSource
+import com.example.desafio_android.data.datasources.networkdatasource.FakeNetworkDataSource
 import org.junit.Before
 import org.junit.Test
 

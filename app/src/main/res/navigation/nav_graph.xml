@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.desafio_android.ui.home.HomeFragment"
+        android:name="com.example.desafio_android.presentation.views.fragments.HomeFragment"
         android:label="@string/home_fragment_title"
         tools:layout="@layout/fragment_home">
         <action
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_details"
-        android:name="com.example.desafio_android.ui.details.DetailsFragment"
+        android:name="com.example.desafio_android.presentation.views.fragments.DetailsFragment"
         android:label="@string/details_fragment"
         tools:layout="@layout/fragment_details">
 

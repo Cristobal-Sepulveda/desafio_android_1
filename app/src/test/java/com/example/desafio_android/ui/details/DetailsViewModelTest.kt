@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.desafio_android.data.FakeGhRepository
 import com.example.desafio_android.data.dataclasses.returns.ApiPullRequestResponse
-import com.example.desafio_android.data.source.local.FakeRoomDataSource
-import com.example.desafio_android.data.source.network.FakeNetworkDataSource
+import com.example.desafio_android.data.datasources.localdatasource.FakeRoomDataSource
+import com.example.desafio_android.data.datasources.networkdatasource.FakeNetworkDataSource
 import com.example.desafio_android.utils.getOrAwaitValue
 import com.example.desafio_android.data.pullRequest1
 import com.example.desafio_android.data.pullRequest2
@@ -13,6 +13,7 @@ import com.example.desafio_android.data.pullRequest3
 import com.example.desafio_android.data.repository1
 import com.example.desafio_android.data.repository2
 import com.example.desafio_android.data.repository3
+import com.example.desafio_android.presentation.viewmodels.DetailsViewModel
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

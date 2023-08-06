@@ -3,7 +3,7 @@ package com.example.desafio_android.data
 import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryDTO
 import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryOwnerDTO
 import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryPullRequestDTO
-import com.example.desafio_android.data.dataclasses.dto.UserDTO
+import com.example.desafio_android.data.dataclasses.dto.GHJavaRepositoryPullRequestUserDTO
 
  val repository1 =
     GHJavaRepositoryDTO(
@@ -59,7 +59,7 @@ import com.example.desafio_android.data.dataclasses.dto.UserDTO
         1.toLong(),
         1.toString(),
         1.toString(),
-        UserDTO(
+        GHJavaRepositoryPullRequestUserDTO(
             1,
             1.toString(),
             1.toString()
@@ -74,7 +74,7 @@ import com.example.desafio_android.data.dataclasses.dto.UserDTO
         2.toLong(),
         2.toString(),
         2.toString(),
-        UserDTO(
+        GHJavaRepositoryPullRequestUserDTO(
             2,
             2.toString(),
             2.toString()
@@ -89,7 +89,7 @@ import com.example.desafio_android.data.dataclasses.dto.UserDTO
         3.toLong(),
         3.toString(),
         3.toString(),
-        UserDTO(
+        GHJavaRepositoryPullRequestUserDTO(
             3,
             3.toString(),
             3.toString()

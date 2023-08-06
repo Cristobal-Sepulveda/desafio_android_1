@@ -1,14 +1,14 @@
 package com.example.desafio_android.utils
 
-import com.example.desafio_android.apiservices.GitHubJavaRepositoriesApi
-import com.example.desafio_android.apiservices.GitHubJavaRepositoryPullRequestApi
-import com.example.desafio_android.data.source.AppDataSource
-import com.example.desafio_android.data.GhRepository
-import com.example.desafio_android.data.IGhRepository
-import com.example.desafio_android.data.source.local.RoomDataSource
-import com.example.desafio_android.data.source.network.NetworkDataSource
-import com.example.desafio_android.ui.details.DetailsViewModel
-import com.example.desafio_android.ui.home.HomeViewModel
+import com.example.desafio_android.data.apis.GitHubJavaRepositoriesApi
+import com.example.desafio_android.data.apis.GitHubJavaRepositoryPullRequestApi
+import com.example.desafio_android.data.datasources.AppDataSource
+import com.example.desafio_android.data.repositories.GhRepository
+import com.example.desafio_android.data.repositories.IGhRepository
+import com.example.desafio_android.data.datasources.localdatasource.RoomDataSource
+import com.example.desafio_android.data.datasources.networkdatasource.NetworkDataSource
+import com.example.desafio_android.presentation.viewmodels.DetailsViewModel
+import com.example.desafio_android.presentation.viewmodels.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.annotation.KoinReflectAPI
 import org.koin.dsl.module

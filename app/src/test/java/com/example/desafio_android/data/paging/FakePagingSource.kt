@@ -2,10 +2,8 @@ package com.example.desafio_android.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryDO
-import com.example.desafio_android.data.dataclasses.domainObjects.GHJavaRepositoryOwnerDO
-import com.example.desafio_android.data.dataclasses.dto.asDomainModel
-import com.example.desafio_android.data.source.network.NetworkDataSource
+import com.example.desafio_android.domain.GHJavaRepositoryDO
+import com.example.desafio_android.domain.GHJavaRepositoryOwnerDO
 import kotlin.math.max
 
 
