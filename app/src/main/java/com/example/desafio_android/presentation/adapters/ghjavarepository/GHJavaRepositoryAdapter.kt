@@ -10,9 +10,14 @@ import com.example.desafio_android.utils.DiffCallBackProvider
 
 
 class GHJavaRepositoryAdapter(
-    private val _viewModel: HomeViewModel,
+    //private val _viewModel: HomeViewModel,
+    private val delegate: GHJavaRepositoryAdapterDelegate,
     diffCallBack: DiffCallBackProvider<GHJavaRepositoryDO>
 ) : PagingDataAdapter<GHJavaRepositoryDO, GHJavaRepositoryViewHolder>(diffCallBack) {
+
+    interface GHJavaRepositoryAdapterDelegate{
+        fun onRepositoryClicked(gHJavaRepository: GHJavaRepositoryDO)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GHJavaRepositoryViewHolder {
         return GHJavaRepositoryViewHolder(
@@ -25,11 +30,14 @@ class GHJavaRepositoryAdapter(
     }
 
     override fun onBindViewHolder(holder: GHJavaRepositoryViewHolder, position: Int) {
-        val gitHubJavaRepository = getItem(position)
-        holder.bind(gitHubJavaRepository!!)
+        val gHJavaRepository = getItem(position)
+        holder.bind(gHJavaRepository!!)
         holder.itemView.setOnClickListener{
-            _viewModel.displayGitHubJavaRepositoryDetails(gitHubJavaRepository)
+            delegate.onRepositoryClicked(gHJavaRepository)
         }
+        /*holder.itemView.setOnClickListener{
+            _viewModel.displayGitHubJavaRepositoryDetails(gHJavaRepository)
+        }*/
     }
 
 }
