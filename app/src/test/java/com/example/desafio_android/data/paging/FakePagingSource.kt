@@ -3,7 +3,7 @@ package com.example.desafio_android.data.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.desafio_android.domain.GHJavaRepositoryDO
-import com.example.desafio_android.domain.GHJavaRepositoryOwnerDO
+import com.example.desafio_android.domain.GHJavaRepositoryUserDO
 import kotlin.math.max
 
 
@@ -23,7 +23,7 @@ class FakePagingSource(
                     it.toLong(),
                     it.toString(),
                     it.toString(),
-                    GHJavaRepositoryOwnerDO(
+                    GHJavaRepositoryUserDO(
                         it.toLong(),
                         it.toString(),
                         it.toString(),

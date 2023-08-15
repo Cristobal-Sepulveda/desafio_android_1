@@ -10,7 +10,6 @@ import com.example.desafio_android.utils.DiffCallBackProvider
 
 
 class GHJavaRepositoryAdapter(
-    //private val _viewModel: HomeViewModel,
     private val delegate: GHJavaRepositoryAdapterDelegate,
     diffCallBack: DiffCallBackProvider<GHJavaRepositoryDO>
 ) : PagingDataAdapter<GHJavaRepositoryDO, GHJavaRepositoryViewHolder>(diffCallBack) {
@@ -35,9 +34,5 @@ class GHJavaRepositoryAdapter(
         holder.itemView.setOnClickListener{
             delegate.onRepositoryClicked(gHJavaRepository)
         }
-        /*holder.itemView.setOnClickListener{
-            _viewModel.displayGitHubJavaRepositoryDetails(gHJavaRepository)
-        }*/
     }
-
 }

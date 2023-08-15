@@ -32,8 +32,7 @@ class DetailsFragment: Fragment() {
     ): View {
         val bundle =  DetailsFragmentArgs.fromBundle(
             requireArguments()
-        )
-            .parcelableGitHubJavaRepository
+        ).parcelableGitHubJavaRepository
 
         requireActivity().findViewById<MaterialToolbar>(R.id.toolbar).title = bundle.name
 
