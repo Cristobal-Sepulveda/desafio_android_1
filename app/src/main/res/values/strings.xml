@@ -12,4 +12,5 @@
     <string name="cargandoRepositorios">Cargando repositorios...</string>
     <string name="noHayPullRequests">Este repositorio no tiene pull requests</string>
     <string name="ha_ocurrido_un_error">Ha ocurrido un error. Reinicie la app.</string>
+    <string name="parcelableGitHubJavaRepository">parcelableGitHubJavaRepository</string>
 </resources>

@@ -30,6 +30,7 @@ class DetailsFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         val bundle =  DetailsFragmentArgs.fromBundle(
             requireArguments()
         ).parcelableGitHubJavaRepository
